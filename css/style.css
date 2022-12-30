@@ -146,7 +146,7 @@ nav button {
 header {
     position: relative;
     top: 5rem;
-    overflow: hidden;
+    overflow: hidden!important;
     height: 95vh;
     margin-bottom: 3rem;
 }
@@ -233,6 +233,37 @@ h1{
 p {
     font-size: 18px;
 }
+
+@media only screen and (max-width:1440px){
+    .form-container form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        position: absolute;
+        top: 5rem;
+        left: 290px;
+        background: rgb(0, 0, 0);
+        color: white;
+        padding: 30px;
+        border-radius: 0.5rem;
+    }
+    .image1 {
+        position: absolute;
+        bottom: -10rem;
+        top: ;
+        left: ;
+        z-index: 2;
+}
+    .image2 {
+        position: absolute;
+        bottom: -21rem;
+        top: ;
+        left: ;
+        z-index: 1;
+}
+}
+
 @media only screen and (max-width:1360px){
     .image1 {
         position: absolute;
@@ -258,3 +289,4 @@ p {
 } 
 
 }
+

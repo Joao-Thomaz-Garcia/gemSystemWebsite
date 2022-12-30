@@ -1,55 +1,8 @@
 <?php include("nav.html")?>
-
 <link rel="stylesheet" href="css/usersettings.css">
 <?php
-    include('connection.php');
 
 //Verifica a session, se não estiver logado, redireciona para o login.
-if(!isset($_SESSION)){
-    session_start();
-  }
-if(!isset($_SESSION['id'])){
-    header("Location: login.php");
-  }
-  
-
-
-$id = $_SESSION['id'];
-$sql_cliente = "SELECT * FROM users WHERE id = '$id'";
-$query_cliente = $mysqli->query($sql_cliente) or die($mysqli->error);
-$cliente = $query_cliente->fetch_assoc();
-
-if(isset($_POST['name'])){
-    die();
-    //Verificar as duas senhas e as outras formas de erro, se tudo der certo, enviar e-mail
-        $fullName = $_POST['name'];
-        $email = strtolower($_POST['email']);
-        $password = $_POST['password'];
-        $confirmPassword = $_POST['newpassword'];
-
-//Verifica a senha no banco de dados.
-        if(password_verify($password, $cliente['password'])){
-
-            if($confirmPassword != null){
-                $password = $confirmPassword;
-                $cryptoPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            }
-
-            $cryptoPassword = password_hash($password, PASSWORD_DEFAULT);
-
-
-            $sql_code_users = "UPDATE users
-            SET fullname='$fullName',
-            email='$email',
-            password='$cryptoPassword'
-            WHERE id = '$id'";
-
-        }
-}    
-
-
-
 
 $erro = false;
 if(count($_POST) > 0){
@@ -152,15 +105,15 @@ if(count($_POST) > 0){
             $owner_id = $_SESSION['id'];
 
             $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$address', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
-            $enviar_bd = $mysqli->query($sql_code) or die($mysqli->error);
+            $enviar_bd = $mysqliConnect->query($sql_code) or die($mysqliConnect->error);
             if($enviar_bd){
-                //echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
+                echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
                 UNSET($_POST);
             }
-            //echo "<p>Arquivo enviado com sucesso!";
+            echo "<p>Arquivo enviado com sucesso!";
         }
-        //else
-            //echo "<p>Falha ao enviar o arquivo.</p>";
+        else
+            echo "<p>Falha ao enviar o arquivo.</p>";
     }
 
 
@@ -201,15 +154,18 @@ if(count($_POST) > 0){
 
 </style>
 <header>
-<form class="macaco">
+<form>
+    <div style="display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em">
 <div style="display: grid;
 align-items: center;
 justify-content: center;">
-    Name: <br></break><input style="width: 400px;" value="<?php echo $cliente['fullname'] ?>" type="text" name="name" />
-    <Br>E-mail:<br><input value="<?php echo $cliente['email'] ?>" type="email" name="email" />
+    Nome: <br></break><input style="width: 400px;" type="text" name="nome" />
+    <Br>E-mail:<br><input type="email" name="email_usuario" />
     
-    <br>Your password: <br><input type="password" name="password" />
-    <Br>Insert the new password: <br><input type="password" name="newpassword" />
+    <br>Senha: <br><input type="password" name="senha" />
+    <Br>Repita Senha: <br><input type="password" name="repitasenha" />
     
     <br>
     <button type="submit" style="
@@ -219,7 +175,13 @@ justify-content: center;">
     border-radius: 5px;
     padding: 10px 77px;
     cursor: pointer;
-"><i class="uil uil-save"></i>Save</button>
+"><i class="uil uil-save"></i>Salvar</button> </form>
+    </div>
+    <div style="display: grid;
+    align-items center;
+    justify-content: center;
+    border: 1px solid rgb(219, 219, 219);">
+    </div>
     </div>
 <link rel="stylesheet" href="./css/host.css">
     <style>
@@ -241,20 +203,13 @@ justify-content: center;">
             }
         
     </style>
-
-    <!-- HEADER - LOGIN -->
-<header>
-<div class="section group">
     <div class="middle">
         <div style="display:grid;
-        flex-direction: column;
-        flex-wrap: nowrap;
         align-content: center;
-        align-items: stretch;
         justify-content: center;
         background-color: white;
         border: 1px solid rgb(219, 219, 219);
-        padding: 30px;" class="col span_1_of_2">
+        padding: 20px;">
 
         <form method="POST" enctype="multipart/form-data" action="">
             <h2 style="text-align: center;">EDIT CAR INFO</h2>
@@ -266,7 +221,7 @@ justify-content: center;">
             <input value="<?php if(isset($_POST['color'])) echo $_POST['color']; ?>" name ="color" type="text" placeholder="Car color">
             
 
-            <div style="float: left;">
+            <div style="">
             <select value="<?php if(isset($_POST['seats'])) echo $_POST['seats']; ?>" name="seats" id="seat-select">
                 <option value selected="selected">How many seats?</option>
                 <option value="2">2</option>
@@ -302,19 +257,6 @@ justify-content: center;">
             ">Send data</button>
 
         </form>
-        </div>
-        <div class="col span_1_of_2">
-        <div id="app" class="container">
-     <div class="grid">
-        <form>
-
-          <button name="test" value="0" type="submit"><img src="images/bmw.png" alt="carro1"></button>
-          <input type="hidden" name="id" value="">
-          <div class="title">
-            <h3>Exemplo</h3>
-          </div>
-          <div class="description">
-          </form>
     </div>
     <style>
 </header>

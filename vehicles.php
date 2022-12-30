@@ -55,10 +55,10 @@ else{
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 340px));
+    grid-template-columns: repeat(3, minmax(200px, 540px));
     grid-gap: 20px;
     align-items: stretch;
-    
+    overflow: hidden;
   }
 
   .grid>form {
@@ -69,8 +69,8 @@ else{
   
   .grid>form img {
     cursor: pointer;
-    max-width: 440px;
-    max-height: 300px;
+    max-width: 100%;
+    max-height: 210px;
     transition-duration: 0.5s;
     border-radius: 4px;
   }
@@ -135,19 +135,36 @@ left: 120px;
 }
 .grid>form img {
     cursor: pointer;
-    max-width: 240px;
-    max-height: 200px;
+    max-width: 440px;
+    max-height: 250px;
     transition-duration: 0.5s;
     border-radius: 4px;
   }
-}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 240px));
+    grid-template-columns: repeat(2, minmax(100px, 440px));
     grid-gap: 20px;
     align-items: stretch;
     
   }
+}
+@media only screen and (max-width:1440px){
+  .form-container form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: 1rem;
+    left: 290px;
+    background: rgb(0, 0, 0);
+    color: white;
+    padding: 21px;
+    border-radius: 0.5rem;
+}
+}
+
   </style>
 <header>
 
