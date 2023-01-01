@@ -161,11 +161,11 @@ if(count($_POST) > 0){
 <div style="display: grid;
 align-items: center;
 justify-content: center;">
-    Nome: <br></break><input style="width: 400px;" type="text" name="nome" />
+    Name: <br></break><input style="width: 400px;" type="text" name="nome" />
     <Br>E-mail:<br><input type="email" name="email_usuario" />
     
-    <br>Senha: <br><input type="password" name="senha" />
-    <Br>Repita Senha: <br><input type="password" name="repitasenha" />
+    <br>Password: <br><input type="password" name="senha" />
+    <Br>Repeat Password: <br><input type="password" name="repitasenha" />
     
     <br>
     <button type="submit" style="
@@ -175,7 +175,7 @@ justify-content: center;">
     border-radius: 5px;
     padding: 10px 77px;
     cursor: pointer;
-"><i class="uil uil-save"></i>Salvar</button> </form>
+"><i class="uil uil-save"></i>Save</button> </form>
     </div>
     <div style="display: grid;
     align-items center;

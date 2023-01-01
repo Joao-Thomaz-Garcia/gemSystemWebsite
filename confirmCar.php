@@ -1,3 +1,79 @@
+<?php
+include("connection.php");
+
+//Verifica a session, se não estiver logado, redireciona para o login.
+if(!isset($_SESSION)){
+  session_start();
+}
+if(!isset($_SESSION['id'])){
+  header("Location: login");
+}
+//Incluir filtragem caso não haja um carro selecionado para redirecionar para a página de veiculos
+
+
+//Coleta de dados com o método GET
+if(isset($_GET['pickupdate'])){
+  $pickupdate = $_GET['pickupdate'];
+}
+else{
+  $pickupdate = '';
+
+}
+
+//
+//Colocar por padrão o cálculo de dias para retornar, fazendo a subtração de pickupdate - returndate
+//
+
+//Verifica se o usuario entrou com um id de carro, se sim, mantem-se na página.
+//Se não, retorna para a vehicles.
+if(isset($_GET['id'])){
+  $carid = $_GET['id'];
+}
+else{
+  $carid = '';
+}
+
+
+if($carid != null || $carid != ''){
+  $sql_query = $mysqli->query("SELECT * FROM cars WHERE id in ('$carid')") or die("Error + $mysqli->error");
+}
+else{
+  header("Location: vehicles");
+}
+
+//Se a id não existir, retorna para a vehicles
+if(mysqli_num_rows($sql_query) > 0){
+}
+else if(mysqli_num_rows($sql_query) < 1){
+  header("Location: vehicles");
+
+}
+
+
+
+//Se a query não retornar um carro disponivel, retorna para a página de veículos
+while($arquivo = $sql_query->fetch_assoc())
+{
+  if($arquivo['available'] == 0){
+    header("Location: vehicles");
+
+  }
+  else if($arquivo['available'] == 1){
+
+  }
+  else{
+    header("Location: vehicles");
+
+  }
+
+}
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +167,7 @@
             <input type="date" name="pickupdate" id="" value="">
         </div>
         <div class="input-box">
-            <span>Amount Days</span>
+            <span>Amount of Days</span>
             <input type="text">
             <input type="submit" value="Calculate" class="calculate">
         </div>

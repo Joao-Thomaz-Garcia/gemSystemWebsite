@@ -5,7 +5,7 @@ if(!isset($_SESSION)){
   }
   //Se a sessão já existir, e o usuario estiver logado, redireciona ele para a página index.php
   if(isset($_SESSION['id'])){
-    header("Location: index.php");
+    header("Location: user-settings");
   }
 
 if(isset($_POST['email'])){
@@ -29,7 +29,7 @@ if(isset($_POST['email'])){
             }
             $_SESSION['id'] = $login['id'];
 
-            header("Location: index.php");
+            header("Location: index");
             //echo "Logado!";
         }
         else

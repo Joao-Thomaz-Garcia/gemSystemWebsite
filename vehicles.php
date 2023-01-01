@@ -3,12 +3,15 @@
 include("connection.php");
 
 //Verifica a session, se não estiver logado, redireciona para o login.
+//RETIRAR A NECESSIDADE DE LOGIN PARA ENTRAR NA PÁGINA DOS VEICULOS
 if(!isset($_SESSION)){
   session_start();
 }
 if(!isset($_SESSION['id'])){
-  header("Location: login.php");
+  header("Location: login");
 }
+//
+
 
 //Faz a filtragem para o envio de dados.
 if(isset($_GET['cityaddress'])){
@@ -45,7 +48,7 @@ else if($cityaddress != '')
 }
 else{
   //CASO ALGO ERRADO ACONTEÇA ENVIA PARA A PÁGINA INICIAL
-  die(header("Location: index.php"));
+  die(header("Location: index"));
 }
 
 ?>
@@ -179,12 +182,13 @@ function initMap() {
   });
 }
 </script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm-1kjUs_NKnKccu2orORsvRaOMFp5Sn4&libraries=places&callback=initMap" async defer></script>
 
 
 
     <div class="form-container">
-    <form action="vehicles.php" method="GET">
+    <form action="vehicles" method="GET">
         <div class="input-box">
             <span>Location</span>
             <input style="width: 365px; type="search" name="cityaddress" id="autocomplete" value="<?php echo $cityaddress ?>" placeholder="City or address">
@@ -208,17 +212,21 @@ function initMap() {
   <?php
     while($arquivo = $sql_query->fetch_assoc())
     {
+      if($arquivo['available'] != 0){
         ?>
-          <form>
-          <button name="test" value="0" type="submit"><img src="<?php echo $arquivo['filepath'];  ?>" alt="carro1"></button>
+
+
+          <form action="confirmCar" method="GET">
+          <button name="" value="" type="submit"><img src="<?php echo $arquivo['filepath'];  ?>" alt="carro1"></button>
           <input type="hidden" name="id" value="<?php echo $arquivo['id']; ?>">
           <div class="title">
             <h3><?php echo $arquivo['model']; ?></h3>
           </div>
           <div class="description">
-            R$<?php echo $arquivo['id']; //SUBSTITUIR O BANCO DE DADOS O QUANTO ANTES!!?>
+            R$<?php echo $arquivo['id']; //SUBSTITUIR O BANCO DE DADOS O QUANTO ANTES!!?> Per Day
           </div>
       </form>
+<?php } else{}?>
 
   <?php
     }

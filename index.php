@@ -25,15 +25,15 @@ $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
 <body>
     <nav> <!-- NAV -->
         <div class="container nav_container">
-            <a href="index.php"> <h3>GEM</h3> </a>
+            <a href="index"> <h3>GEM</h3> </a>
             <ul class="nav__menu">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About us</a></li>
-                <li><a href="vehicles.php">Vehicles</a></li>
-                <li><a href="contact.php">Contact</a></li>
+                <li><a href="index">Home</a></li>
+                <li><a href="about">About us</a></li>
+                <li><a href="vehicles">Vehicles</a></li>
+                <li><a href="contact">Contact</a></li>
                 <li><a style="border: 1px solid ;
-                    padding: 1rem 1rem;"href="host.php">Become a Host</a></li>
-                <a href="login.php"> <h4>Login</h4></a>
+                    padding: 1rem 1rem;"href="host">Become a Host</a></li>
+                <a href="login"> <h4>Login</h4></a>
             </ul>
             <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
             <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
@@ -59,7 +59,7 @@ function initMap() {
 
     
     <div class="form-container">
-    <form action="vehicles.php" method="GET">
+    <form action="vehicles" method="GET">
         <div class="input-box">
             <span>Location</span>
             <input style="width: 365px; type="search" name="cityaddress" id="autocomplete" placeholder="Insert a City">
