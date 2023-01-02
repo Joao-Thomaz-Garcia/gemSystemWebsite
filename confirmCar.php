@@ -224,26 +224,30 @@ while($arquivo = $sql_query->fetch_assoc())
   <?php 
   if($hasvalues == 1)
   {
-    echo('index');
+    echo('create-checkout-session.php');
   }
   else{
     echo('confirmcar');
   }
   ?>"
   
-  method="GET">
+  method="POST">
 
 
-  <input type="hidden" name="id" value="<?php echo($carid); ?>">
+  <input type="hidden" name="product_id" value="<?php echo($carid); ?>">
   <input type="hidden" name="pickupdate" value="<?php echo($pickupdate); ?>">
   <input type="hidden" name="returndate" value="<?php echo($returndate); ?>">
   <input type="hidden" name="value" value="<?php if(isset($value)){
-    echo($value);
+        $value .= "00";
+    echo(intval($value));
   }
   else{
     $subtraction = (strtotime($returndate) - strtotime($pickupdate)) /(24*60*60);  $value = intval($subtraction) * intval($priceday);
-    echo($value);
+    $value .= "00";
+    echo(intval($value));
   }?>">
+
+<input type="hidden" name="carname" value="<?php echo($carname); ?>">
 
 
 

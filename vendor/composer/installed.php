@@ -19,12 +19,12 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'phpmailer/phpmailer' => array(
-            'pretty_version' => 'v6.7',
-            'version' => '6.7.0.0',
-            'reference' => '80fc8686fcd070267b98dae0ec228d5d67d94310',
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v10.2.0',
+            'version' => '10.2.0.0',
+            'reference' => 'd660523f176cf3451f3ee041256c746047a7a121',
             'type' => 'library',
-            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
