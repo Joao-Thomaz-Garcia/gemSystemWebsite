@@ -63,6 +63,23 @@ while($arquivo = $sql_query->fetch_assoc())
     $carname = $arquivo['model'];
     $priceday = $arquivo['daily_value'];
     $imagepath = $arquivo['filepath'];
+    $ownerid = $arquivo['owner_id'];
+
+    $sql_queryOwner = $mysqli->query("SELECT * FROM users WHERE id in ('$ownerid')") or die("Error + $mysqli->error");
+    while($novoLoop = $sql_queryOwner->fetch_assoc()){
+
+      $owneremail = $novoLoop['email'];
+
+    }
+
+
+    $renterid = strval($_SESSION['id']);
+    $sql_queryRenter = $mysqli->query("SELECT * FROM users WHERE id in ('$renterid')") or die("Error + $mysqli->error");
+    while($novoLoop2 = $sql_queryRenter->fetch_assoc()){
+
+      $renteremail = $novoLoop2['email'];
+    }
+
 
     $hasvalues = 0;
 
@@ -249,8 +266,10 @@ while($arquivo = $sql_query->fetch_assoc())
 
   
   <input type="hidden" name="emailvalue" value="<?php echo(intval($subtraction) * intval($priceday)); ?>">
-  <input type="hidden" name="renteremail" value="<?php echo(""); ?>">
 
+  <input type="hidden" name="renteremail" value="<?php echo($renteremail); ?>">
+
+  <input type="hidden" name="owneremail" value="<?php echo($owneremail); ?>">
 
   <input type="hidden" name="carname" value="<?php echo($carname); ?>">
 

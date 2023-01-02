@@ -8,8 +8,13 @@ error_reporting(E_ALL);
 
 require './stripe-service.php';
 
+$owneremail = $_POST['owneremail'];
+
 $email = $_POST['renteremail'];
 $emailamount = $_POST['emailvalue'];
+
+
+
 
 $stripe = new StripeService();
 
@@ -32,7 +37,7 @@ $product = $stripe->getProduct($productId);
 // Caso não exista será cadastrado
 if (!isset($product)) {
   // Cadastrando
-  $product = $stripe->createProduct($productId, $name, $image);
+  $product = $stripe->createProduct($productId, $name);
 }
 
 // Criando o preço
@@ -42,17 +47,19 @@ $price = $stripe->createPrice($productId, $amount);
 //CASO DOIS CLIENTES ALUGUEM O MESMO CARRO NÃO HÁ O QUE SER FEITO
 //ENVIAR E-MAIL DE INTERESSE POR X CARRO NESSE PONTO SE NÃO FERROU
 
+$subject = "Product id: ";
+$subject .= $productId;
+
 if(isset($product)){
 
 
-  send_email("keikovon@gmail.com", "Product id: ", "
-                <h1>Congratulations!!</h1>
-                <p>You are now a member of Gem!!</p>
-                <p>Car id: </p> $productId
-                <p>Car name: </p> $name
-                <p>Total value: </p> $emailamount
-                <p>Renter email: </p> $email
-
+  send_email("keikovon@gmail.com", $subject, "
+                <h1>A user is paying for a car!</h1>
+                <p>Car id: </p> $productId <br>
+                <p>Car name: </p> $name <br>
+                <p>Total value: </p> $emailamount <br>
+                <p>Renter email: </p> $email <br>
+                <p>Owner email: </p> $owneremail <br>
                 ");
 
 }
