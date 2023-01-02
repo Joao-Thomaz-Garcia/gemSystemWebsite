@@ -233,7 +233,9 @@ h1{
 p {
     font-size: 18px;
 }
-
+.logo {
+    max-width: 150px;
+}
 @media only screen and (max-width:1440px){
     .form-container form {
         display: flex;

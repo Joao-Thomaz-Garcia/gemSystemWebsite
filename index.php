@@ -25,7 +25,7 @@ $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
 <body>
     <nav> <!-- NAV -->
         <div class="container nav_container">
-            <a href="index"> <h3>GEM</h3> </a>
+            <a href="index"> <img class="logo" src="./images/Branco.png"> </a>
             <ul class="nav__menu">
                 <li><a href="index">Home</a></li>
                 <li><a href="about">About us</a></li>

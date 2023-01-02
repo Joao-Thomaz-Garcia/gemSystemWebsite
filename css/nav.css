@@ -153,3 +153,6 @@ nav button {
     padding: 10px;
     font-size: 21px;
 }
+.logo {
+    max-width: 150px;
+}
