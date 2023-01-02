@@ -84,7 +84,7 @@ function initMap() {
             </div>
             <div class="header__right">
                 <div class="header__right-image">
-                    <img class="image1"src="./images/bmw.png">
+                    <img class="image1"src="./images/bmw2.png">
                     <img class="image2"src="./images/gradientt.png" alt="">
                 </div>
             </div>
