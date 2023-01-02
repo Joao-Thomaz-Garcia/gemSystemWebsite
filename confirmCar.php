@@ -60,6 +60,40 @@ while($arquivo = $sql_query->fetch_assoc())
   }
   else if($arquivo['available'] == 1){
 
+    $carname = $arquivo['model'];
+    $priceday = $arquivo['daily_value'];
+    $imagepath = $arquivo['filepath'];
+
+    $hasvalues = 0;
+
+    //Checa se o get do pickupdate existe
+    if(isset($_GET['pickupdate'])){
+      $pickupdate = $_GET['pickupdate'];
+      if($pickupdate < date('Y-m-d') || $pickupdate == "" || $pickupdate == null){
+        $pickupdate = date('Y-m-d');
+
+      }
+    }
+    else{
+      //Se não existir, cria um baseado na data do dia de hoje.
+      $pickupdate = date('Y-m-d');
+    }
+
+    //Checa se o get do returndate existe
+    if(isset($_GET['returndate'])){
+      $returndate = $_GET['returndate'];
+      if($returndate <= $pickupdate || $returndate == "" || $returndate == null){
+        $returndate = date('Y-m-d',  strtotime($pickupdate) + strtotime('5 day', 0));
+      }
+    }
+    else{
+            //Se não existir, cria um baseado na data do dia de hoje mais 5 dias.
+      $returndate = date('Y-m-d',  strtotime($pickupdate) + strtotime('5 day', 0));
+    }
+
+    $hasvalues = 1;
+
+
   }
   else{
     header("Location: vehicles");
@@ -157,28 +191,66 @@ while($arquivo = $sql_query->fetch_assoc())
       <div class="form-container">
     <form action="confirmcar" method="GET">
         <div class="input-box">
-            <span>Car Name</span>
-            <img class="image1"src="./images/bmw.png">
+            <span><?php echo($carname);  ?></span>
+            <img class="image1" src="<?php echo($imagepath); //Fazer a normalização do tamanho da imagem?>">
             <span style="font-weight:300">Price Per Day:</span>
-            <span style="font-weight:300">$50</span>
+            <span style="font-weight:300">$<?php echo($priceday);  ?></span>
         </div>
+
+        <input type="hidden" name="id" value="<?php echo($carid); ?>">
+
         <div class="input-box">
             <span>Pick-Up Date</span>
-            <input type="date" name="pickupdate" id="" value="">
+            <input type="date" name="pickupdate" id="" value="<?php echo($pickupdate); ?>">
         </div>
         <div class="input-box">
-            <span>Amount of Days</span>
-            <input type="text">
+            <span>Return Date</span>
+            <input type="date" name="returndate" id="" value="<?php echo($returndate); ?>">
             <input type="submit" value="Calculate" class="calculate">
+
+
         </div>
         <div class="input-box">
         <span>Price</span>
-        <h3>$20</h3>
-        <input type="submit" value="Payment" class="submits">
+        <h3>$<?php $subtraction = (strtotime($returndate) - strtotime($pickupdate)) /(24*60*60);  $value = intval($subtraction) * intval($priceday); echo($value); ?> </h3>
+
 </div>
 
 
     </form>
+
+  <form action="
+  
+  <?php 
+  if($hasvalues == 1)
+  {
+    echo('index');
+  }
+  else{
+    echo('confirmcar');
+  }
+  ?>"
+  
+  method="GET">
+
+
+  <input type="hidden" name="id" value="<?php echo($carid); ?>">
+  <input type="hidden" name="pickupdate" value="<?php echo($pickupdate); ?>">
+  <input type="hidden" name="returndate" value="<?php echo($returndate); ?>">
+  <input type="hidden" name="value" value="<?php if(isset($value)){
+    echo($value);
+  }
+  else{
+    $subtraction = (strtotime($returndate) - strtotime($pickupdate)) /(24*60*60);  $value = intval($subtraction) * intval($priceday);
+    echo($value);
+  }?>">
+
+
+
+  <input type="submit" value="Payment" class="submits">
+
+  </form>
+
 </div>
       </form>
 </header>

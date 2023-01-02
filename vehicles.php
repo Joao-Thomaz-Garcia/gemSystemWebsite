@@ -27,13 +27,13 @@ if(isset($_GET['pickupdate'])){
   $pickupdate = $_GET['pickupdate'];
 }
 else{
-  $pickupdate = '';
+  $pickupdate = date('Y-m-d');
 }
 if(isset($_GET['returndate'])){
   $returndate = $_GET['returndate'];
 }
 else{
-  $returndate = '';
+  $returndate = date('Y-m-d',  strtotime($pickupdate) + strtotime('5 day', 0));
 }
 
 
@@ -219,11 +219,15 @@ function initMap() {
           <form action="confirmCar" method="GET">
           <button name="" value="" type="submit"><img src="<?php echo $arquivo['filepath'];  ?>" alt="carro1"></button>
           <input type="hidden" name="id" value="<?php echo $arquivo['id']; ?>">
+
+          <input type="hidden" name="pickupdate" value="<?php echo($pickupdate); ?>">
+          <input type="hidden" name="returndate" value="<?php echo($returndate); ?>">
+
           <div class="title">
             <h3><?php echo $arquivo['model']; ?></h3>
           </div>
           <div class="description">
-            R$<?php echo $arquivo['id']; //SUBSTITUIR O BANCO DE DADOS O QUANTO ANTES!!?> Per Day
+            R$<?php echo $arquivo['daily_value']; //SUBSTITUIR O BANCO DE DADOS O QUANTO ANTES!!?> Per Day
           </div>
       </form>
 <?php } else{}?>
