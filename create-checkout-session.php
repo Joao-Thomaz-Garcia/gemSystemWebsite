@@ -1,10 +1,15 @@
 <?php
 
+include('lib/mail.php');
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require './stripe-service.php';
+
+$email = $_POST['renteremail'];
+$emailamount = $_POST['emailvalue'];
 
 $stripe = new StripeService();
 
@@ -37,6 +42,27 @@ $price = $stripe->createPrice($productId, $amount);
 //CASO DOIS CLIENTES ALUGUEM O MESMO CARRO NÃO HÁ O QUE SER FEITO
 //ENVIAR E-MAIL DE INTERESSE POR X CARRO NESSE PONTO SE NÃO FERROU
 
+if(isset($product)){
+
+
+  send_email("keikovon@gmail.com", "Product id: ", "
+                <h1>Congratulations!!</h1>
+                <p>You are now a member of Gem!!</p>
+                <p>Car id: </p> $productId
+                <p>Car name: </p> $name
+                <p>Total value: </p> $emailamount
+                <p>Renter email: </p> $email
+
+                ");
+
+}
+
+
+
+
 $checkout_session = $stripe->startCheckout($price->id);
 // Redirecionando
+
+
+
 header("Location: " . $checkout_session->url);

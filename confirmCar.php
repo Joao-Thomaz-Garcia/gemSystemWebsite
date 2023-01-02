@@ -247,7 +247,12 @@ while($arquivo = $sql_query->fetch_assoc())
     echo(intval($value));
   }?>">
 
-<input type="hidden" name="carname" value="<?php echo($carname); ?>">
+  
+  <input type="hidden" name="emailvalue" value="<?php echo(intval($subtraction) * intval($priceday)); ?>">
+  <input type="hidden" name="renteremail" value="<?php echo(""); ?>">
+
+
+  <input type="hidden" name="carname" value="<?php echo($carname); ?>">
 
 
 
