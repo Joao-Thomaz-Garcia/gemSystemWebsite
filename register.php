@@ -66,6 +66,11 @@ if(isset($_POST['fullName'])){
 <?php include("nav.html");?>
 <link rel="stylesheet" href="./css/login.css">
     <style>
+        .error{
+            font-size: 14px;
+            color: red;
+            display: none;
+        }
         input {
             all: unset;
             padding: 5px;
@@ -112,9 +117,13 @@ if(isset($_POST['fullName'])){
                     <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
 
                 <input type="text" name="fullName" placeholder="Full Name">
+                <p class="error">ERRO</p>
                 <input type="text" name="email" placeholder="Email">
+                <p class="error">ERRO</p>
                 <input type="password" name="password" placeholder="Password">
+                <p class="error">ERRO</p>
                 <input type="password" name="confirmPassword" placeholder="Repeat Your Password">
+                <p class="error">ERRO</p>
                 <label for="">Driver license:</label>
                     <input name="arquivo" type="file">
 
