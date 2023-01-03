@@ -16,29 +16,43 @@ if(isset($_POST['fullName'])){
 
     if($fullName == null){
         $erro = "Please fill the name field.";
-        die();
+        //die();
     }
     if($email == null){
         //Lembrar de setar a comparação de e-mail para toLower para não ter erro.
         //Inplode e explode para garantir que seja um email de fato
 
         $erro = "Please fill the email field.";
-        die();
+        //die();
     }
     else if($email != null && !filter_var($email, FILTER_VALIDATE_EMAIL)){
-        die("Not a valid e-mail!");
+        //die("Not a valid e-mail!");
     }
     
+
+    
+    //https://dev.to/codeanddeploy/check-if-email-address-is-already-exists-in-the-database-4jf7
+    //Verifica se o e-mail esta na database.
+    $sql = "SELECT * FROM users WHERE email='".$email."'";
+    $results = $mysqli->query($sql) or die($mysqli->error);
+    $row = $results->fetch_assoc();
+    if((is_array($row) && count($row)>0)){
+        $erro = "Email already in database";
+        //die("Email already in database");
+    }
+    //
+
+
     if($password == null){
         $erro = "Please insert a valid password, it must contain from 6 to 16 characters.";
-        die();
+        //die();
     }
     else{
         if($password != $confirmPassword){
             $erro = "The passwords don't match, try again.";
-            die();
+            //die();
         }
-        else if($password == $confirmPassword){
+        else if($password == $confirmPassword && !isset($erro)){
             $cryptoPassword = password_hash($password, PASSWORD_DEFAULT);
             //FAZER A VERIFICAÇÃO DO TIPO E DO TAMANHO DA DRIVER LICENSE E DPS FAZER UMA QUERY ESPECIFICA PRA ISSO
             $sql_code = "INSERT INTO users (fullname, email, password, driver_license, can_drive, register_time) VALUES('$fullName', '$email', '$cryptoPassword', 'NULL', 0, NOW())";
@@ -69,7 +83,6 @@ if(isset($_POST['fullName'])){
         .error{
             font-size: 14px;
             color: red;
-            display: none;
         }
         input {
             all: unset;
@@ -117,13 +130,9 @@ if(isset($_POST['fullName'])){
                     <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
 
                 <input type="text" name="fullName" placeholder="Full Name">
-                <p class="error">ERRO</p>
                 <input type="text" name="email" placeholder="Email">
-                <p class="error">ERRO</p>
                 <input type="password" name="password" placeholder="Password">
-                <p class="error">ERRO</p>
                 <input type="password" name="confirmPassword" placeholder="Repeat Your Password">
-                <p class="error">ERRO</p>
                 <label for="">Driver license:</label>
                     <input name="arquivo" type="file">
 
@@ -133,6 +142,17 @@ if(isset($_POST['fullName'])){
             border-radius: 5px;
             padding: 10px;
             ">Register</button>
+            <p class="error" >
+                <?php 
+                if(isset($erro)){
+            echo($erro);
+            }
+            else{
+                echo('');
+            }
+            
+            ?></p>
+
 
             </form>
 
