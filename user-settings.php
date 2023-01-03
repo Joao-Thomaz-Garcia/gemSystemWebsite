@@ -154,10 +154,10 @@ if(count($_POST) > 0){
 
 </style>
 <header>
-<form>
+<form style="border: 0px solid">
     <div style="display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1em">
+    gap: 1rem">
 <div style="display: grid;
 align-items: center;
 justify-content: center;">
@@ -208,7 +208,6 @@ justify-content: center;">
         align-content: center;
         justify-content: center;
         background-color: white;
-        border: 1px solid rgb(219, 219, 219);
         padding: 20px;">
 
         <form method="POST" enctype="multipart/form-data" action="">

@@ -33,7 +33,16 @@ $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
                 <li><a href="contact">Contact</a></li>
                 <li><a style="border: 1px solid ;
                     padding: 1rem 1rem;"href="host">Become a Host</a></li>
-                <a href="login"> <h4>Login</h4></a>
+                    <div class="dropdown">
+                        <span><img src="images/user-circle.svg"style="max-width: 30px;"></i></span>
+                        <div class="dropdown-content">
+                          <a href="login.php"><p class=".">Login</p></a>
+                          <a href="register.php"><p class=".">Sign Up</p></a>
+                          <a href="user-settings.php"><p class=".">User Settings</p></a>
+                          <a href="logout.php"><p class=".">Logout</p></a>
+
+                        </div>
+                      </div>
             </ul>
             <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
             <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>

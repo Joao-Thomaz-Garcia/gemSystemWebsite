@@ -114,10 +114,10 @@ function loginError()
             ">Login</button>
 
             
-            <a style="color: rgb(0, 149, 246, 1);
+          <!--  <a style="color: rgb(0, 149, 246, 1);
             text-align: center;
             padding-top: 20px;
-            font-weight: 600;" href="recoverPassword.php">Forgot password?</a>
+            font-weight: 600;" href="recoverPassword.php">Forgot password?</a> -->
             </form>
 
             <div style="background-color: white;
