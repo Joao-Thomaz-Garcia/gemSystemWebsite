@@ -38,6 +38,10 @@ if(!isset($_SESSION)){
   session_start();
   $isLogged = true;
 }
+if(isset($_SESSION['id'])){
+  $isLogged = true;
+
+}
 if(!isset($_SESSION['id'])){
   $isLogged = false;
   //header("Location: login");
