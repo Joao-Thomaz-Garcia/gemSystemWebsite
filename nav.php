@@ -31,10 +31,27 @@
                     <div class="dropdown">
                         <span><img src="images/user-circle.svg"style="max-width: 30px;"></i></span>
                         <div class="dropdown-content">
-                          <a href="login.php"><p>Login</p></a>
-                          <a href="register.php"><p>Sign Up</p></a>
+
+
+<?php 
+if(!isset($_SESSION)){
+  session_start();
+  $isLogged = true;
+}
+if(!isset($_SESSION['id'])){
+  $isLogged = false;
+  //header("Location: login");
+} ?>
+
+                    <?php if($isLogged){
+                          ?>
                           <a href="user-settings.php"><p>User Settings</p></a>
                           <a href="logout.php"><p>Logout</p></a>
+                    <?php } else if(!$isLogged){ ?>
+                          <a href="login.php"><p>Login</p></a>
+                          <a href="register.php"><p>Sign Up</p></a>
+                    <?php } ?>
+
                         </div>
                     </div>
             </ul>

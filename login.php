@@ -55,7 +55,7 @@ function loginError()
 
 ?>
 
-<?php include("nav.html");?>
+<?php include("nav.php");?>
 <link rel="stylesheet" href="./css/login.css">
     <style>
         input {

@@ -1,4 +1,4 @@
-<?php include("nav.html")?>
+<?php include("nav.php")?>
 
 <link rel="stylesheet" href="./css/about.css">
 

@@ -141,7 +141,7 @@ if(count($_POST) > 0){
 }
 ?>
 
-<?php include("nav.html")?>
+<?php include("nav.php")?>
 
 
 <script>

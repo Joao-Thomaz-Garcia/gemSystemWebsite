@@ -203,7 +203,7 @@ while($arquivo = $sql_query->fetch_assoc())
   }
 </style>
 
-    <?php include ("nav.html")?>
+    <?php include ("nav.php")?>
     <header>
       <div class="form-container">
     <form action="confirmcar" method="GET">

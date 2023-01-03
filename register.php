@@ -77,7 +77,7 @@ if(isset($_POST['fullName'])){
 
 ?>
 
-<?php include("nav.html");?>
+<?php include("nav.php");?>
 <link rel="stylesheet" href="./css/login.css">
     <style>
         .error{
