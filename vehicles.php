@@ -8,7 +8,7 @@ if(!isset($_SESSION)){
   session_start();
 }
 if(!isset($_SESSION['id'])){
-  header("Location: login");
+  //header("Location: login");
 }
 //
 
@@ -216,7 +216,15 @@ function initMap() {
         ?>
 
 
-          <form action="confirmCar" method="GET">
+          <form action="<?php 
+  if(!isset($_SESSION['id']))
+{
+  echo('login');
+}
+  else{
+  echo('confirmCar');
+} ?>" 
+method="GET">
           <button name="" value="" type="submit"><img src="<?php echo $arquivo['filepath'];  ?>" alt="carro1"></button>
           <input type="hidden" name="id" value="<?php echo $arquivo['id']; ?>">
 

@@ -53,7 +53,7 @@ $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
     <!-- HEADER -->
     <header>
 
-    <script>
+<script>
         //Inicia o mapa e o sistema de autocomplete.
 function initMap() {
   var input = document.getElementById('autocomplete');
@@ -65,6 +65,7 @@ function initMap() {
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm-1kjUs_NKnKccu2orORsvRaOMFp5Sn4&libraries=places&callback=initMap" async defer></script>
+
 
     
     <div class="form-container">

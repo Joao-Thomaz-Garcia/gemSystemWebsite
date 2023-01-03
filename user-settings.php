@@ -165,7 +165,7 @@ justify-content: center;">
     <Br>E-mail:<br><input type="email" name="email_usuario" />
     
     <br>Password: <br><input type="password" name="senha" />
-    <Br>Repeat Password: <br><input type="password" name="repitasenha" />
+    <Br>New Password: <br><input type="password" name="repitasenha" />
     
     <br>
     <button type="submit" style="

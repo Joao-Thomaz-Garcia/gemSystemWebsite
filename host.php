@@ -1,100 +1,164 @@
 <?php
 
+//Verifica a session, se não estiver logado, redireciona para o login.
+if(!isset($_SESSION)){
+    session_start();
+  }
+  if(!isset($_SESSION['id'])){
+    header("Location: login.php");
+  }
+
+
+
 $erro = false;
 if(count($_POST) > 0){
     
     include('connection.php');
     
-    $fullname = $_POST['fullname'];
-    $phonenumber = $_POST['phonenumber'];
-    $email = $_POST['email'];
-    $brand = $_POST['brand'];
-    $model = $_POST['model'];
-    $year = $_POST['year'];
-    $color = $_POST['color'];
-    $seats = $_POST['seats'];
+    //Lida com o registro
+    if(isset($_POST['address'])){
+        $address = $_POST['address'];
+        //LEMBRAR DE COLOCAR O SISTEMA DO GOOGLE PARA REGISTRAR O ENDEREÇO
+        $brand = $_POST['brand'];
+        $model = $_POST['model'];
+        $year = $_POST['year'];
+        $color = $_POST['color'];
+        $seats = $_POST['seats'];
+        //Filtrar tipos de combustivel e quantos assentos para não entrar coisas que não devem.
+        $seats = $_POST['seats'];
+        $fuel = $_POST['fuel'];
+        //Filtrar tipos de combustivel e quantos assentos para não entrar coisas que não devem.
+        $daily_values = $_POST['priceperday'];
+    
+    }
 
-    if(empty($fullname)){
-        $erro = "Insert your name.";
-    }
-    //FAZER O ERRO DE TELEFONE DA MANEIRA QUE DEVE SER FEITA.
-    if(empty($fullname)){
-        $erro = "Insert your phone number.";
-    }
-    if(empty($email)){
-        $erro = "Insert your email.";
-    }
-    if(empty($brand)){
-        $erro = "Insert the car brand.";
-    }
-    if(empty($model)){
-        $erro = "Insert the car model.";
-    }
-    if(empty($year)){
-        $erro = "Insert the car year.";
-    }
-    if(empty($color)){
-        $erro = "Insert the car color.";
-    }
-    if(empty($seats)){
-        $erro = "Insert the car seats.";
-    }
-    //ERRO
-    if($erro){
-        echo "<p><b>ERRO: $erro</b></p>";
+    $error_address;
+    $error_brand;
+    $error_model;
+    $error_year;
+    $error_color;
+    $error_seats;
+    $error_fuel;
+    $error_file;
+    $error_price;
+
+    //TRATAR DOS ERROS DE ALGUMA FORMA
+    if(empty($address)){
+        $error_address = "Insert your address.";
     }
     else{
-        //ARQUIVOS
-        if(isset($_FILES['arquivo']))
+        $error_address = null;
+    }
+    if(empty($brand)){
+        $error_brand = "Insert the car brand.";
+    }
+    else{
+        $error_brand = null;
+    }
+    if(empty($model)){
+        $error_model = "Insert the car model.";
+    }
+    else{
+        $error_model = null;
+    }
+    if(empty($year)){
+        $error_year = "Insert the car year.";
+    }
+    else{
+        $error_year = null;
+    }
+    if(empty($color)){
+        $error_color = "Insert the car color.";
+    }
+    else{
+        $error_color = null;
+    }
+    if(empty($seats)){
+        $error_seats = "Insert the car seats.";
+    }
+    else{
+        $error_seats = null;
+    }
+    //ERRO
+
+    //ARQUIVOS
+    if(isset($_FILES['arquivo'])){
         $arquivo = $_FILES['arquivo'];
 
-    if(empty($arquivo))
-        echo("Sem arquivo");
+    }
+
+    if(empty($arquivo)){
+        $error_file = "Insert a .jpg .jpeg or .png file of your car!";
+
+    }
     else
     {
-        if($arquivo['error'])
-            die("Falha ao enviar arquivo");
-        if($arquivo['size'] > 2099900 )
-            die("Arquivo muito grande!");
-
-        $pasta = "files/";
-        $nomeDoArquivo = $arquivo['name'];
-        $novoNomeDoArquivo = uniqid();
-        $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-        
-        if($extensao != "jpg" && $extensao != 'png' && $extensao != 'jpeg'){
-
-            die("Tipo de arquivo não aceito + $extensao");
-        }
-        
-        $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
-        $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
-        if($deu_certo)
-        {
-            $sql_code = "INSERT INTO renters (fullname, phonenumber, email, brand, model, year, color, seats, filepath,register_time) VALUES ('$fullname', '$phonenumber', '$email', '$brand', '$model' , '$year', '$color', '$seats', '$path' , NOW())";
-            $deu_certo = $mysqli->query($sql_code) or die($mysqli->error);
-            if($deu_certo){
-                echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
-                UNSET($_POST);
-            }
-                        echo "<p>Arquivo enviado com sucesso!";
-        }
-        else
-            echo "<p>Falha ao enviar o arquivo.</p>";
-    }
-    $sql_query = $mysqli->query("SELECT * FROM renters") or die("AAA + $mysqli->error");
-        //ARQUIVOS
+    if($arquivo['size'] > 2099900 )
+        $error_file = "The file is too large!";
+    else{
+        $error_file = null;
     }
 
+    $pasta = "files/";
+    $nomeDoArquivo = $arquivo['name'];
+    $novoNomeDoArquivo = uniqid();
+    $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+
+    if($extensao != "jpg" && $extensao != 'png' && $extensao != 'jpeg'){
+        header("index");
+        //die("Tipo de arquivo não aceito + $extensao");
+    }
+
+    $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
+
+    //Lembrar de cortar a imagem depois
+
+    $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
+
+    if($deu_certo)
+    {
+        $owner_id = $_SESSION['id'];
+
+        $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$address', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
+        
+        
+        $enviar_bd = $mysqli->query($sql_code) or die($mysqli->error);
+        if($enviar_bd){
+            //echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
+            UNSET($_POST);
+            header("Location: index.php");
+        }
+        //echo "<p>Arquivo enviado com sucesso!";
+    }
+    /*else
+        echo "<p>Falha ao enviar o arquivo.</p>";*/
+    }
 
 
 
 
-    //Colocar as mensagens e disparos de erro antes de enviar para o banco de dados.
+
 }
 ?>
 
 <?php include("nav.html")?>
+
+
+<script>
+        //Inicia o mapa e o sistema de autocomplete.
+function initMap() {
+  var input = document.getElementById('autocomplete');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    document.getElementById("address").value = JSON.stringify(place.address_components);
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm-1kjUs_NKnKccu2orORsvRaOMFp5Sn4&libraries=places&callback=initMap" async defer></script>
+
+
+
 <link rel="stylesheet" href="./css/host.css">
     <style>
         input {
@@ -156,12 +220,12 @@ if(count($_POST) > 0){
         <form method="POST" enctype="multipart/form-data" action="">
         <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
             <h2 style="text-align: center;">BECOME A GEM HOST</h2>
-            <input value="" name="address" type="text" placeholder="Address">
+
+            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
             <input value="<?php if(isset($_POST['brand'])) echo $_POST['brand']; ?>" name ="brand" type="text" placeholder="Car brand">
             <input value="<?php if(isset($_POST['model'])) echo $_POST['model']; ?>" name ="model" type="text" placeholder="Car model">
             <input value="<?php if(isset($_POST['year'])) echo $_POST['year']; ?>" name ="year" type="text" placeholder="Car year">
-            <input value="<?php if(isset($_POST['color'])) echo $_POST['color']; ?>" name ="color" type="text" placeholder="Car color">
-            
+            <input value="<?php if(isset($_POST['color'])) echo $_POST['color']; ?>" name ="color" type="text" placeholder="Car color">            
 
             <div style="float: left;">
             <select value="<?php if(isset($_POST['seats'])) echo $_POST['seats']; ?>" name="seats" id="seat-select">
