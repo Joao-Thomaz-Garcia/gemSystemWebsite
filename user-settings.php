@@ -60,6 +60,13 @@ if(count($_POST) > 0){
 
 
                 //If new password != null && != ''; -> change password
+                if(strlen($new_password) < 6 || strlen($new_password) > 16){
+                    $erro = true;
+                }
+                else{
+                    $erro = false;
+                }            
+
 
                 //Verifica o nome, se for nulo ou vazio, mantem o anterior.
                 if($name == '' && $name == null){
@@ -81,12 +88,24 @@ if(count($_POST) > 0){
                     $email = $user_mail;
                 }
 
+                
+                if($erro){
+                    $sql_code = "UPDATE users 
+                    SET fullname = '$name',
+                    email = '$email'
+                    WHERE id = '$owner_id'";
+                }
+                else if(!$erro){
+                    $cryptoPassword = password_hash($new_password, PASSWORD_DEFAULT);
 
-        
-                $sql_code = "UPDATE users 
-                SET fullname = '$name',
-                email = '$email'
-                WHERE id = '$owner_id'";
+                    $sql_code = "UPDATE users 
+                    SET fullname = '$name',
+                    email = '$email',
+                    password = '$cryptoPassword'
+                    WHERE id = '$owner_id'";
+                }
+
+
         
                 $user_update = $mysqli->query($sql_code) or die($mysqli->error);
                 if($user_update){
@@ -100,12 +119,12 @@ if(count($_POST) > 0){
             else
             {
                 //AJUSTAR OS ERROS DOS DIE();
-                $login_error = "Failed to confirm your password, please try again.";
+                //$login_error = "Failed to confirm your password, please try again.";
             }
         }
         else
         {
-            $login_error = "Failed to confirm your password, please try again.";
+            //$login_error = "Failed to confirm your password, please try again.";
         }
     
     }
@@ -334,6 +353,8 @@ function initMap() {
             
             <input type="hidden" name="carid" value="<?php echo $car_loop['id']; ?>">
             
+            <input type="email" readonly name="carid" value="<?php echo('aaa@bb.com'); ?>">
+
             <input value="<?php echo($car_loop['address']); ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
             <input value="<?php echo($car_loop['brand']); ?>" name ="brand" type="text" placeholder="Car brand">
             <input value="<?php echo($car_loop['model']); ?>" name ="model" type="text" placeholder="Car model">

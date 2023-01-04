@@ -14,6 +14,11 @@ if(isset($_POST['fullName'])){
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
 
+    if(strlen($_POST['password']) < 6 || strlen($_POST['password']) > 16){
+        $erro = "Please insert a valid password, it must contain from 6 to 16 characters.";
+    }
+
+
     if($fullName == null){
         $erro = "Please fill the name field.";
         //die();
