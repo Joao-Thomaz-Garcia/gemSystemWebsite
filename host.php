@@ -237,10 +237,10 @@ function initMap() {
                 <option value="6">6 or more</option> </select>
                 <select name="fuel" id="fuel-select">
                     <option value selected="selected">Type of fuel?</option>
-                    <option value="one">Regular</option>
-                    <option value="two">Premium</option> 
-                    <option value="three">Electricity</option>
-                    <option value="four">Hybrid</option> </select> </div>
+                    <option value="regular">Regular</option>
+                    <option value="premium">Premium</option> 
+                    <option value="electricity">Electricity</option>
+                    <option value="hybrid">Hybrid</option> </select> </div>
                 <input name="priceperday" type="number" min="1" step="any" placeholder="Price per day">
 
             <!--BOTÃO DE ENVIO -->
