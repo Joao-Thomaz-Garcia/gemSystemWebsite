@@ -104,7 +104,7 @@ function loginError()
         border: 1px solid rgb(219, 219, 219);
         padding: 40px;" action="" method="POST">
                     <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
-                <input type="text" name="email" placeholder="Email">
+                <input type="email" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">
                 <button type="submit" style="
             text-align: center;

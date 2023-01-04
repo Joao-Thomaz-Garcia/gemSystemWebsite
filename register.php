@@ -26,6 +26,8 @@ if(isset($_POST['fullName'])){
         //die();
     }
     else if($email != null && !filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $erro = "Please fill the email field.";
+
         //die("Not a valid e-mail!");
     }
     
@@ -130,7 +132,7 @@ if(isset($_POST['fullName'])){
                     <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
 
                 <input type="text" name="fullName" placeholder="Full Name">
-                <input type="text" name="email" placeholder="Email">
+                <input type="email" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">
                 <input type="password" name="confirmPassword" placeholder="Repeat Your Password">
                 <label for="">Driver license:</label>

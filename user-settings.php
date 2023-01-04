@@ -3,11 +3,111 @@
 <?php
 
 //Verifica a session, se não estiver logado, redireciona para o login.
+if(!isset($_SESSION)){
+    session_start();
+  }
+  if(!isset($_SESSION['id'])){
+    header("Location: login.php");
+  }
+
+  include('connection.php');
+
+
+  $owner_id = $_SESSION['id'];
+  $user_query = $mysqli->query("SELECT * FROM users WHERE id = '$owner_id'") or die("Error + $mysqli->error");
+
+  while($user_loop = $user_query->fetch_assoc()){
+    $user_mail = $user_loop['email'];
+    $user_name = $user_loop['fullname'];
+  }
 
 $erro = false;
 if(count($_POST) > 0){
+
+    if(isset($_POST['senha'])){
+        $password = $_POST['senha'];
+
+        //Query para verificar se a senha existe, ai começar a fazer alterações
+
+
+        $sql_code = "SELECT * FROM users WHERE id = '$owner_id' LIMIT 1";
+        $sql_exec = $mysqli->query($sql_code) or die($mysqli->error);
+
+        $login = $sql_exec->fetch_assoc();
+        if($login != NULL){
+            if(password_verify($password, $login['password']))
+            {
+                //Verifica a sessão novamente, e cria uma se for preciso.
+                if(!isset($_SESSION)){
+                    session_start();
+                }
+                $_SESSION['id'] = $login['id'];
     
-    include('connection.php');
+                //Alteração dos dados cadastrados.
+                $new_password = $_POST['nova_senha'];
+
+                $name = $_POST['nome'];
+                $email = strtolower($_POST['email_usuario']);
+        
+                //Verificar e criar uma query especializada na mudança de dados
+                //Cada caso deve ter um $sql_code baseado na requisição.
+
+
+                //If new password != null && != ''; -> change password
+
+                //Verifica o nome, se for nulo ou vazio, mantem o anterior.
+                if($name == '' && $name == null){
+                    $name = $user_name;
+                }
+
+                //Verifica o e-mail do usuario, se for nulo, invalido ou vazio, mantém o anterior.
+                if($email == null){
+
+                    $mail_error = true;
+                }
+                else if($email != null && !filter_var($email, FILTER_VALIDATE_EMAIL)){
+
+                    $mail_error = true;
+                }
+
+                if($mail_error)
+                {
+                    $email = $user_mail;
+                }
+
+
+        
+                $sql_code = "UPDATE users 
+                SET fullname = '$name',
+                email = '$email'
+                WHERE id = '$owner_id'";
+        
+                $user_update = $mysqli->query($sql_code) or die($mysqli->error);
+                if($user_update){
+                    header("Location: user-settings");
+                }
+
+
+
+
+            }
+            else
+            {
+                //AJUSTAR OS ERROS DOS DIE();
+                $login_error = "Failed to confirm your password, please try again.";
+            }
+        }
+        else
+        {
+            $login_error = "Failed to confirm your password, please try again.";
+        }
+    
+    }
+
+    }
+
+
+
     if(isset($_POST['address'])){
         $address = $_POST['address'];
         //LEMBRAR DE COLOCAR O SISTEMA DO GOOGLE PARA REGISTRAR O ENDEREÇO
@@ -118,7 +218,7 @@ if(count($_POST) > 0){
 
 
 
-}
+
 
 
     //Colocar as mensagens e disparos de erro antes de enviar para o banco de dados.
@@ -154,18 +254,25 @@ if(count($_POST) > 0){
 
 </style>
 <header>
-<form style="border: 0px solid">
+<form style="border: 0px solid" action="" method="POST">
     <div style="display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem">
 <div style="display: grid;
 align-items: center;
 justify-content: center;">
-    Name: <br></break><input style="width: 400px;" type="text" name="nome" />
-    <Br>E-mail:<br><input type="email" name="email_usuario" />
+    Name: <br></break><input style="width: 400px;" type="text" value="<?php 
+    if(isset($user_name)){
+        echo($user_name); 
+    }  ?>" name="nome" />
+
+    <Br>E-mail:<br><input type="email" value="<?php 
+    if(isset($user_mail)){
+        echo($user_mail); 
+    }  ?>" name="email_usuario" />
     
     <br>Password: <br><input type="password" name="senha" />
-    <Br>New Password: <br><input type="password" name="repitasenha" />
+    <Br>New Password: <br><input type="password" name="nova_senha" />
     
     <br>
     <button type="submit" style="
