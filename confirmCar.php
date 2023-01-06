@@ -291,6 +291,8 @@ while($arquivo = $sql_query->fetch_assoc())
 
   <input type="hidden" name="carname" value="<?php echo($carname); ?>">
 
+  <input type="hidden" name="pickupdate" value="<?php echo($pickupdate); ?>">
+  <input type="hidden" name="returndate" value="<?php echo($returndate); ?>">
 
 
   <input type="submit" value="Payment" class="submits">

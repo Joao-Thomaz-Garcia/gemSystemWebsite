@@ -13,6 +13,8 @@ $owneremail = $_POST['owneremail'];
 $email = $_POST['renteremail'];
 $emailamount = $_POST['emailvalue'];
 
+$pickupdate = $_POST['pickupdate'];
+$returndate = $_POST['returndate'];
 
 
 
@@ -58,6 +60,10 @@ if(isset($product)){
                 <p>Car id: </p> $productId <br>
                 <p>Car name: </p> $name <br>
                 <p>Total value: </p> $emailamount <br>
+
+                <p>Pick-up date: </p> $pickupdate <br>
+                <p>Return date: </p> $returndate <br>
+
                 <p>Renter email: </p> $email <br>
                 <p>Owner email: </p> $owneremail <br>
                 ");
