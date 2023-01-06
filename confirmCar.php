@@ -134,20 +134,32 @@ while($arquivo = $sql_query->fetch_assoc())
     <title>Document</title>
 </head>
 <link rel="stylesheet" href="./css/confirmcar.css">
-<style>.form-container form {
+<style>.form-container {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
   position: absolute;
-  top: 10rem;
-  left: 200px;
+  top: 8rem;
+  left: 300px;
   background: rgb(0, 0, 0);
   color: white;
   padding: 20px;
   border-radius: 1.5rem;
 }
-
+.form-containerinfo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5rem;
+  position: absolute;
+  top: 15rem;
+  left: 0px;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 20px;
+  border-radius: 1.5rem;
+}
 .input-box{
     flex: 1, 1, 7rem;
     display: flex;
@@ -167,7 +179,7 @@ while($arquivo = $sql_query->fetch_assoc())
     font-size: 1rem;
 }
 
-.form-container form .submits {
+.form-container .submits {
     flex: 0 0 7;
     padding: 10px 75px;
     margin-top: 10px;
@@ -179,17 +191,25 @@ while($arquivo = $sql_query->fetch_assoc())
     font-weight: 500;
     cursor: pointer;
 }
-.form-container form .calculate {
+.form-container .calculate {
     flex: 0 0 7;
     margin-top: 10px;
     padding: 10px 75px;
     border: none;
     border-radius: 0.5rem;
-    background: green;
+    background: blue;
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
+}
+.form-container .pickupdate{
+    padding: 7px;
+    outline: none;
+    border: none;
+    background: #eeeff1;
+    border-radius: 0.5rem;
+    font-size: 1rem;
 }
   img {
     max-width: 180px;
@@ -205,8 +225,9 @@ while($arquivo = $sql_query->fetch_assoc())
 
     <?php include ("nav.php")?>
     <header>
-      <div class="form-container">
+    
     <form action="confirmcar" method="GET">
+      <div class="form-container">
         <div class="input-box">
             <span><?php echo($carname);  ?></span>
             <img class="image1" src="<?php echo($imagepath); //Fazer a normalização do tamanho da imagem?>">
@@ -217,13 +238,11 @@ while($arquivo = $sql_query->fetch_assoc())
         <input type="hidden" name="id" value="<?php echo($carid); ?>">
 
         <div class="input-box">
-            <span>Pick-Up Date</span>
-            <input type="date" name="pickupdate" id="" value="<?php echo($pickupdate); ?>">
-        </div>
-        <div class="input-box">
+        <span>Pick-Up Date</span>
+            <input type="date" name="pickupdate" class="pickupdate" id="" value="<?php echo($pickupdate); ?>">
             <span>Return Date</span>
             <input type="date" name="returndate" id="" value="<?php echo($returndate); ?>">
-            <input type="submit" value="Calculate" class="calculate">
+            <input type="submit" value="Calculate Price" class="calculate">
 
 
         </div>
@@ -231,7 +250,6 @@ while($arquivo = $sql_query->fetch_assoc())
         <span>Price</span>
         <h3>$<?php $subtraction = (strtotime($returndate) - strtotime($pickupdate)) /(24*60*60);  $value = intval($subtraction) * intval($priceday); echo($value); ?> </h3>
 
-</div>
 
 
     </form>
@@ -278,9 +296,8 @@ while($arquivo = $sql_query->fetch_assoc())
   <input type="submit" value="Payment" class="submits">
 
   </form>
-
 </div>
-      </form>
+</form>
 </header>
 </body>
 </html>

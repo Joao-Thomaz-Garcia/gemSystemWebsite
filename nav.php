@@ -22,17 +22,16 @@
         <div class="container nav_container">
             <a href="index"> <img class="logo" src="./images/Branco.png"> </a>
             <ul class="nav__menu">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About us</a></li>
-                <li><a href="vehicles.php">Vehicles</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a style="border: 1px solid;
-                    padding: 1rem 1rem;"href="host.php">Become a Host</a></li>
-                    <div class="dropdown">
+                <li><a href="index">Home</a></li>
+                <li><a href="about">About us</a></li>
+                <li><a href="vehicles">Vehicles</a></li>
+                <li><a href="contact">Contact</a></li>
+                <li><a style="border: 1px solid ;
+                    padding: 1rem 1rem;"href="host">Become a Host</a></li>
+                      <div class="dropdown">
                         <span><img src="images/user-circle.svg"style="max-width: 30px;"></i></span>
                         <div class="dropdown-content">
-
-
+                          
 <?php 
 if(!isset($_SESSION)){
   session_start();
@@ -59,30 +58,29 @@ if(!isset($_SESSION['id'])){
                         </div>
                     </div>
             </ul>
-            <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
-            <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
-        </div>
-    </nav>
-</body>
-
-<style>
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: black;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      padding: 12px 16px;
-      left: -40px;
-      z-index: 1;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    </style>
+            <div class="dropdown-phone">
+                        <span><img src="images/menu.svg" style="max-width: 30px;"></i></span>
+                        <div class="dropdown-content-phone">
+                        <li><a href="index">Home</a></li>
+                <li><a href="about">About us</a></li>
+                <li><a href="vehicles">Vehicles</a></li>
+                <li><a href="contact">Contact</a></li>
+                <li><a href="host">Become a Host</a></li>
+</div>
+</div>
+                    <div class="dropdown-phone2">
+                        <span><img src="images/user-circle.svg"style="max-width: 30px;"></i></span>
+                        <div class="dropdown-content-phone2">
+                        <?php if($isLogged){
+                          ?>
+                          <a href="user-settings.php"><p>User Settings</p></a>
+                          <a href="logout.php"><p>Logout</p></a>
+                    <?php } else if(!$isLogged){ ?>
+                          <a href="login.php"><p>Login</p></a>
+                          <a href="register.php"><p>Sign Up</p></a>
+                    <?php } ?>
+                        </div>
+                      </div>
+          </div>
+      </nav>
+    </body>

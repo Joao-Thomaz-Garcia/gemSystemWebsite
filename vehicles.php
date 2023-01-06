@@ -131,10 +131,35 @@ else{
     font-weight: 500;
     cursor: pointer;
 }
+@media only screen and (max-width:1440px){
+  .form-container form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: 1rem;
+    left: 269px;
+    background: rgb(0, 0, 0);
+    color: white;
+    padding: 21px;
+    border-radius: 0.5rem;
+}
+}
 @media only screen and (max-width:1360px){
 
-.form-container form{
-left: 120px;
+  .form-container form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  top: 1rem;
+  left: 232px;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 21px;
+  border-radius: 0.5rem;
 }
 .grid>form img {
     cursor: pointer;
@@ -146,28 +171,42 @@ left: 120px;
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(100px, 440px));
+    grid-template-columns: repeat(3, minmax(100px, 440px));
     grid-gap: 20px;
     align-items: stretch;
     
   }
 }
-@media only screen and (max-width:1440px){
+@media only screen and (max-width:600px){
+  header {
+    position: relative;
+    top: 5rem!important;
+    height: 95vh;
+}
   .form-container form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  top: -1rem;
+  left: 0px;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 7px;
+  border-radius: 0rem;
+}
+.grid {
+  display: grid;
+    grid-template-columns: repeat(1, minmax(100px, 440px));
+    grid-gap: 20px;
     position: absolute;
-    top: 1rem;
-    left: 290px;
-    background: rgb(0, 0, 0);
-    color: white;
-    padding: 21px;
-    border-radius: 0.5rem;
+    top: 12rem;
+    align-items: stretch;
+    left: 0px;
+    
+  }
 }
-}
-
   </style>
 <header>
 

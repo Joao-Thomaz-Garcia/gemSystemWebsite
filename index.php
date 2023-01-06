@@ -22,37 +22,9 @@ $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
     <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
-    <nav> <!-- NAV -->
-        <div class="container nav_container">
-            <a href="index"> <img class="logo" src="./images/Branco.png"> </a>
-            <ul class="nav__menu">
-                <li><a href="index">Home</a></li>
-                <li><a href="about">About us</a></li>
-                <li><a href="vehicles">Vehicles</a></li>
-                <li><a href="contact">Contact</a></li>
-                <li><a style="border: 1px solid ;
-                    padding: 1rem 1rem;"href="host">Become a Host</a></li>
-                    <div class="dropdown">
-                        <span><img src="images/user-circle.svg"style="max-width: 30px;"></i></span>
-                        <div class="dropdown-content">
-                          <a href="login.php"><p class=".">Login</p></a>
-                          <a href="register.php"><p class=".">Sign Up</p></a>
-                          <a href="user-settings.php"><p class=".">User Settings</p></a>
-                          <a href="logout.php"><p class=".">Logout</p></a>
-
-                        </div>
-                      </div>
-            </ul>
-            <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
-            <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
-        </div>
-    </nav>
-    <!-- END OF NAV -->
-
+<?php include('nav.php')?>
     <!-- HEADER -->
     <header>
-
 <script>
         //Inicia o mapa e o sistema de autocomplete.
 function initMap() {
@@ -89,7 +61,7 @@ function initMap() {
         <div class="container header__container">
             <div class="header__left">
                 <h1>BETTER THAN JUST A RENTAL CAR</h1>
-                    <p>
+                    <p class="text">
 "I was impressed by how easy it was to get the I needed in no time. GEM system is very intuitive and responsive. When I brought it back, I was greeted with a big smile by the host, and the touchless return was a stress-free experience. I'll be back for sure!"</p>
             </div>
             <div class="header__right">

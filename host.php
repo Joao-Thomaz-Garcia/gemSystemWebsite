@@ -194,16 +194,16 @@ function initMap() {
             <div class="left" style="display:grid;
         align-content: center;
         align-items: stretch;
-        justify-content: center;">
+        justify-content: center;
+        background-color: white;">
                 <h1 style="text-align: center">BECOME A GEM HOST</h1>       
-                <h2>LET US HELP YOU HAVE AN EXTRA INCOME BY RENTING YOUR CAR.</h1>
-                <h3>ALL OUR HOSTS ARE HANDPICKED TO ENSURE OUR CLIENT'S SAFETY AND SATISFACTION.</h1>
+                <h2 style="text-align: center;
+                font-size: 1.5rem">LET US HELP YOU HAVE AN EXTRA INCOME BY RENTING YOUR CAR.</h2>
                     <p style="text-align: center">
-"I was impressed by how easy it was to get the I needed in no time. GEM system is very intuitive and responsive.</p>
-                </p>
-                <p>When I brought it back, I was greeted with a big smile by the host, and the touchless return was a stress-free experience. I'll be back for sure!"</p>
+                    With GEM, you will have the freedom to make your car (or cars) available, giving you the freedom to pause or start earning extra cash.</p>
+                    <p class="text2" style="text-align: center"> Fill out the form on the side to get started.</p>
             </div>
-        <div style="
+        <div class="right" style="
         display:grid;
         flex-direction: column;
         flex-wrap: nowrap;

@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="./css/about.css">
 
-
+<header>
 <section class="faqs">
     <h2>OUR FREQUENT QUESTIONS ANSWERED</h2>
     <div class="container faqs__container">
@@ -92,7 +92,7 @@ Once we have the required documents your claim will be handled by our insurer’
                 </p>
             </div>
         </article>
-
+        </header>
 <!--        <article class="faq">
             <div class="faq__icon"><i class="uil uil-plus"></i></div>
             <div class="question__answer">
@@ -106,15 +106,23 @@ Once we have the required documents your claim will be handled by our insurer’
         </article>
 -->
         <script type="text/javascript">
-    const faqs = document.querySelectorAll('.faq');
+const faqs = document.querySelectorAll('.faq');
 
-    faqs.forEach(faq => {
-        faq.addEventListener('click', () => {
+faqs.forEach(faq => {
+    faq.addEventListener('click', () => {
         faq.classList.toggle('open');
-        })
-    })
+   
+
+const icon = faq.querySelector('.faq__icon i');
+if(icon. className === 'uil uil-plus ') {
+    icon.className = "uil uil-minus";
+} else {
+    icon.className = "uil uil-plus";
+}
+})
+})
 
         </script>
-        
+     
     </div>
 </section>

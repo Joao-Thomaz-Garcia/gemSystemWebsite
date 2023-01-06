@@ -104,6 +104,12 @@ if(isset($_POST['fullName'])){
             button:hover {
             background-color: rgb(30, 195, 241);
         }
+        @media only screen and (max-width:600px){
+         
+               div .left{
+                display: none;
+            }
+        }
     </style>
 
     <!-- HEADER - LOGIN -->

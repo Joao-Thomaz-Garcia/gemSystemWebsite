@@ -148,7 +148,6 @@ header {
     top: 5rem;
     overflow: hidden!important;
     height: 95vh;
-    margin-bottom: 3rem;
 }
 
 .header__container {
@@ -170,7 +169,7 @@ header {
 }
 .image2 {
     position: absolute;
-    bottom: -30rem;
+    bottom: -31rem;
     top: ;
     left: ;
     z-index: 1;
@@ -255,6 +254,34 @@ p .text {
   .dropdown:hover .dropdown-content {
     display: block;
   }
+  .dropdown-phone {
+    position: relative;
+    display: none;
+  }
+ .dropdown-phone2 {
+    position: relative;
+    display: none;
+  }
+
+@media only screen and (max-width:1920px){
+    h1{
+        font-size: 1rem;
+    }
+    .image2 {
+        position: absolute;
+        bottom: -33rem;
+        top: ;
+        left: ;
+        z-index: 1;
+      }
+      .image1 {
+        position: absolute;
+        bottom: -13rem;
+        top: ;
+        left: ;
+        z-index: 2;
+    }
+}
 @media only screen and (max-width:1440px){
     .form-container form {
         display: flex;
@@ -262,12 +289,13 @@ p .text {
         align-items: center;
         gap: 1rem;
         position: absolute;
-        top: 5rem;
-        left: 290px;
+        top: 2rem;
+        left: 269px;
         background: rgb(0, 0, 0);
         color: white;
         padding: 30px;
         border-radius: 0.5rem;
+        z-index: 3;
     }
     .image1 {
         position: absolute;
@@ -288,9 +316,9 @@ p .text {
 @media only screen and (max-width:1360px){
     .image1 {
         position: absolute;
-        bottom: -10rem;}
+        bottom: -12rem;}
     .image2 {
-        bottom: -20rem;}
+        bottom: -24rem;}
     header{
         height: 87.5vh;
     }
@@ -309,5 +337,107 @@ p .text {
       
 } 
 
-}
-
+@media only screen and (max-width: 1024px){
+    .form-container form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        position: absolute;
+        top: 3rem;
+        left: 0px;
+        background: rgb(0, 0, 0);
+        padding: 10px;
+        border-radius: 0.5rem;
+        color: white;
+      } 
+    .image1{
+        position: absolute;
+        padding: 1rem;
+        max-width: 100%;
+    }
+    .image2{
+        display: none;
+    }
+    header{
+        height: 80vh;
+    }
+    h1{
+        font-style: oblique;
+        font-size: 40px;
+    }
+    .text {
+        font-size: 18px;
+    }
+ .nav__menu{
+    display: none;
+ }
+ .dropdown-phone {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content-phone {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    left: -40px;
+    z-index: 1;
+  }
+  
+  .dropdown-phone:hover .dropdown-content-phone {
+    display: block;
+  }
+  .dropdown-phone2 {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content-phone2 {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    left: -40px;
+    z-index: 1;
+  }
+  
+  .dropdown-phone2:hover .dropdown-content-phone2 {
+    display: block;
+  }
+  @media only screen and (max-width:600px){
+    header {
+      position: relative;
+      top: 5rem!important;
+      height: 95vh;
+  }
+  .header__container{
+    top: 180px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    flex-wrap: wrap;
+  }
+    .form-container form {
+    display: absolute;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: -1rem;
+    left: 0px;
+    background: rgb(0, 0, 0);
+    color: white;
+    padding: 20px;
+    border-radius: 0rem;
+  }
+  .header__right-image{
+    display: none;
+  }
+  }

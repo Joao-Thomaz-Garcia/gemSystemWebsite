@@ -73,11 +73,17 @@ function loginError()
             button:hover {
             background-color: rgb(30, 195, 241);
         }
+        @media only screen and (max-width:600px){
+         
+         div .left{
+          display: none;
+      }
+  }
     </style>
 
     <!-- HEADER - LOGIN -->
 <header style="background-color: rgba(239,238,241,255);">
-    <div style="
+    <div class="all" style="
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -86,8 +92,8 @@ function loginError()
     align-items: center;"
  >
     <div class="left"
-    style="height: 990px;
-           width: 700px;
+    style="height: auto;
+           width: auto;
            background-image: url(images/gem.jfif);
            background-repeat: no-repeat;
            ">
@@ -135,7 +141,6 @@ function loginError()
     
     </div>
 </header>
-<?php include("copyright.html")?>
 
     
     
