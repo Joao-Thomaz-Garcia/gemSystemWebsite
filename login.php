@@ -92,8 +92,8 @@ function loginError()
     align-items: center;"
  >
     <div class="left"
-    style="height: auto;
-           width: auto;
+    style="height: 990px;
+           width: 700px;
            background-image: url(images/gem.jfif);
            background-repeat: no-repeat;
            ">

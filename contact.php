@@ -27,9 +27,7 @@
       <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
       
       <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
-        <div class="alt-send-button">
-          <i class="fa fa-paper-plane"></i><span class="send-text">SEND</span>
-        </div>
+  
       
       </button>
       
@@ -76,7 +74,7 @@
 <style>body {
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background-color: #fff;
     padding-bottom: 100px;
   }
   
@@ -90,7 +88,7 @@
     margin: 0 auto;
     padding: 40px 0;
     font: 300 60px 'Oswald', sans-serif;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
     letter-spacing: 6px;
   }
@@ -117,7 +115,7 @@
   textarea {
     max-width: 400px;
     background-color: #000;
-    color: #fff;
+    color: #000;
     letter-spacing: 1px;
   }
   
