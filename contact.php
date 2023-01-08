@@ -26,7 +26,7 @@
 
       <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
       
-      <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
+      <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND" placeholder="SEND">
   
       
       </button>
@@ -38,11 +38,11 @@
       <div class="direct-contact-container">
 
         <ul class="contact-list">
-          <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place">City, State</span></i></li>
+          <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place">San Francisco</span></i></li>
           
-          <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i></li>
+          <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a href="tel:1-650-201-7761" title="Give me a call">+1 (650) 201-7761</a></span></i></li>
           
-          <li class="list-item"><i class="fa fa-envelope fa-2x"><span class="contact-text gmail"><a href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
+          <li class="list-item"><i class="fa fa-envelope fa-2x"><span class="contact-text gmail"><a href="mailto:info@gemcarrental.com" title="Send me an email">info@gemcarrental.com</a></span></i></li>
           
         </ul>
 
@@ -63,7 +63,7 @@
         </ul>
         <hr>
 
-        <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
+        <div class="copyright">&copy; </div>
 
       </div>
     
@@ -114,9 +114,10 @@
   .form-control, 
   textarea {
     max-width: 400px;
-    background-color: #000;
+    background-color: #fff;
     color: #000;
     letter-spacing: 1px;
+    border: 1px solid
   }
   
   .send-button {
@@ -140,10 +141,7 @@
     letter-spacing: 2px;
   }
   
-  .alt-send-button:hover {
-    transform: translate3d(0px, -29px, 0px);
-  }
-  
+
   /* Begin Right Contact Page */
   .direct-contact-container {
     max-width: 400px;
@@ -244,7 +242,7 @@
   }
   
   .social-media-list li:hover a {
-    color: #000;
+    color: #fff;
   }
   
   .copyright {
