@@ -10,6 +10,7 @@ if(!isset($_SESSION)){
     header("Location: login.php");
   }
 
+  
   if($_SESSION['id'] != 0){
     header("Location: user-settings.php");
   }

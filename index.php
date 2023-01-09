@@ -1,3 +1,9 @@
+<?php 
+if(!isset($_SESSION)){
+    session_start();
+}
+?>
+
 <?php
 $pickupDate = date('Y-m-d');
 $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
