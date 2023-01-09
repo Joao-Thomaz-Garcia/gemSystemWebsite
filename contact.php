@@ -7,7 +7,7 @@ if(!isset($_SESSION)){
 <?php include("nav.php")?>
 
 <link rel="stylesheet" href="contact.css">
-
+<<script src="https://kit.fontawesome.com/6e94d2c5d0.js" crossorigin="anonymous"></script>  
 <section id="contact">
   
   <h1 class="section-header">Contact</h1>
@@ -32,8 +32,10 @@ if(!isset($_SESSION)){
 
       <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
       
-      <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND" placeholder="SEND">
-  
+      <button class="btn send-button" id="submit" type="submit" value="SEND" placeholder="SEND">
+      <div class="alt-send-button">
+          <i class="fa fa-paper-plane"></i><span class="send-text">SEND</span>
+        </div>
       
       </button>
       
@@ -44,7 +46,7 @@ if(!isset($_SESSION)){
       <div class="direct-contact-container">
 
         <ul class="contact-list">
-          <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place">San Francisco</span></i></li>
+          <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place"> San Francisco</span></i></li>
           
           <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a href="tel:1-650-201-7761" title="Give me a call">+1 (650) 201-7761</a></span></i></li>
           
@@ -55,10 +57,10 @@ if(!isset($_SESSION)){
         <hr>
         <ul class="social-media-list">
           <li><a href="#" target="_blank" class="contact-icon">
-            <i class="fa fa-github" aria-hidden="true"></i></a>
+            <i class="fa fa-youtube" aria-hidden="true"></i></a>
           </li>
           <li><a href="#" target="_blank" class="contact-icon">
-            <i class="fa fa-codepen" aria-hidden="true"></i></a>
+            <i class="fa fa-facebook" aria-hidden="true"></i></a>
           </li>
           <li><a href="#" target="_blank" class="contact-icon">
             <i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -87,6 +89,9 @@ if(!isset($_SESSION)){
   #contact {
     width: 100%;
     height: 100%;
+  }
+  .alt-send-button:hover {
+    transform: translate3d(0px, -29px, 0px);
   }
   
   .section-header {
@@ -120,6 +125,7 @@ if(!isset($_SESSION)){
   .form-control, 
   textarea {
     max-width: 400px;
+    width: 400px;
     background-color: #fff;
     color: #000;
     letter-spacing: 1px;
@@ -128,16 +134,17 @@ if(!isset($_SESSION)){
   
   .send-button {
     margin-top: 15px;
-    height: 34px;
+    left: 20px;
+    height: 44px;
     width: 400px;
     overflow: hidden;
-    transition: all .2s ease-in-out;
+    transition: all .9s ease-in-out;
   }
   
   .alt-send-button {
-    width: 400px;
+    width: 350px;
     height: 34px;
-    transition: all .2s ease-in-out;
+    transition: all .4s ease-in-out;
   }
   
   .send-text {
