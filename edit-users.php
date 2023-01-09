@@ -10,127 +10,23 @@ if(!isset($_SESSION)){
     header("Location: login.php");
   }
 
+  if($_SESSION['id'] != 0){
+    header("Location: user-settings.php");
+  }
+
+
   include('connection.php');
 
 
-  $owner_id = $_SESSION['id'];
+
+  $sql_car_query = $mysqli->query("SELECT * FROM cars") or die("Error + $mysqli->error");
 
 
-  $sql_car_query = $mysqli->query("SELECT * FROM cars WHERE owner_id = '$owner_id'") or die("Error + $mysqli->error");
-
-
-  $user_query = $mysqli->query("SELECT * FROM users WHERE id = '$owner_id'") or die("Error + $mysqli->error");
-
-  while($user_loop = $user_query->fetch_assoc()){
-    $user_mail = $user_loop['email'];
-    $user_name = $user_loop['fullname'];
-  }
 
 $erro = false;
 if(count($_POST) > 0){
 
-    if(isset($_POST['senha'])){
-        $password = $_POST['senha'];
-
-        //Query para verificar se a senha existe, ai começar a fazer alterações
-
-
-
-        $sql_code = "SELECT * FROM users WHERE id = '$owner_id' LIMIT 1";
-        $sql_exec = $mysqli->query($sql_code) or die($mysqli->error);
-
-        $login = $sql_exec->fetch_assoc();
-        if($login != NULL){
-            if(password_verify($password, $login['password']))
-            {
-                //Verifica a sessão novamente, e cria uma se for preciso.
-                if(!isset($_SESSION)){
-                    session_start();
-                }
-                $_SESSION['id'] = $login['id'];
-    
-                //Alteração dos dados cadastrados.
-                $new_password = $_POST['nova_senha'];
-
-                $name = $_POST['nome'];
-                $email = strtolower($_POST['email_usuario']);
-        
-                //Verificar e criar uma query especializada na mudança de dados
-                //Cada caso deve ter um $sql_code baseado na requisição.
-
-
-                //If new password != null && != ''; -> change password
-                if(strlen($new_password) < 6 || strlen($new_password) > 16){
-                    $erro = true;
-                }
-                else{
-                    $erro = false;
-                }            
-
-
-                //Verifica o nome, se for nulo ou vazio, mantem o anterior.
-                if($name == '' && $name == null){
-                    $name = $user_name;
-                }
-
-                //Verifica o e-mail do usuario, se for nulo, invalido ou vazio, mantém o anterior.
-                if($email == null){
-
-                    $mail_error = true;
-                }
-                else if($email != null && !filter_var($email, FILTER_VALIDATE_EMAIL)){
-
-                    $mail_error = true;
-                }
-
-                if($mail_error)
-                {
-                    $email = $user_mail;
-                }
-
-                
-                if($erro){
-                    $sql_code = "UPDATE users 
-                    SET fullname = '$name',
-                    email = '$email'
-                    WHERE id = '$owner_id'";
-                }
-                else if(!$erro){
-                    $cryptoPassword = password_hash($new_password, PASSWORD_DEFAULT);
-
-                    $sql_code = "UPDATE users 
-                    SET fullname = '$name',
-                    email = '$email',
-                    password = '$cryptoPassword'
-                    WHERE id = '$owner_id'";
-                }
-
-
-        
-                $user_update = $mysqli->query($sql_code) or die($mysqli->error);
-                if($user_update){
-                    header("Location: user-settings");
-                }
-
-
-
-
-            }
-            else
-            {
-                //AJUSTAR OS ERROS DOS DIE();
-                //$login_error = "Failed to confirm your password, please try again.";
-            }
-        }
-        else
-        {
-            //$login_error = "Failed to confirm your password, please try again.";
-        }
-    
-    }
-
     if(isset($_POST['address'])){
-
         $address = $_POST['address'];
         $brand = $_POST['brand'];
         $model = $_POST['model'];
@@ -212,9 +108,11 @@ if(count($_POST) > 0){
 
         //Update no banco de dados.
 
+
+
         $user_carupdate = $mysqli->query($sql_carcode) or die($mysqli->error);
         if($user_carupdate){
-            header("Location: index");
+            header("Location: edit-users");
         }
 
     }
@@ -264,35 +162,6 @@ if(count($_POST) > 0){
 
 </style>
 <header>
-<form style="border: 0px solid" action="" method="POST">
-    <div style="display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem">
-<div style="display: grid;
-align-items: center;
-justify-content: center;">
-    Name: <br></break><input style="width: 400px;" type="text" value="<?php 
-    if(isset($user_name)){
-        echo($user_name); 
-    }  ?>" name="nome" />
-
-    <Br>E-mail:<br><input type="email" value="<?php 
-    if(isset($user_mail)){
-        echo($user_mail); 
-    }  ?>" name="email_usuario" />
-    
-    <br>Password: <br><input type="password" name="senha" />
-    <Br>New Password: <br><input type="password" name="nova_senha" />
-    
-    <br>
-    <button type="submit" style="
-    text-align: center;
-    align-items: center;
-    margin-top: 5px;
-    border-radius: 5px;
-    padding: 10px 77px;
-    cursor: pointer;
-"><i class="uil uil-save"></i>Save</button> </form>
     </div>
     <div style="display: grid;
     align-items center;
@@ -343,16 +212,26 @@ function initMap() {
 
 
 <?php while($car_loop = $sql_car_query->fetch_assoc()){
+
+$owner_id = $car_loop['owner_id'];
+
+$user_query = $mysqli->query("SELECT * FROM users WHERE id = '$owner_id'") or die("Error + $mysqli->error");
+
+while($user_loop = $user_query->fetch_assoc()){
+  $user_mail = $user_loop['email'];
+}
+
+
   ?>
 
 
         <form method="POST" enctype="multipart/form-data" action="">
             <h2 style="text-align: center;">EDIT CAR INFO</h2>
             
-    
+            
             <input type="hidden" name="carid" value="<?php echo $car_loop['id']; ?>">
             
-            <input type="email" readonly name="" value="<?php echo('aaa@bb.com'); ?>">
+            <input type="email" readonly name="" value="<?php echo($user_mail); ?>">
 
             <input value="<?php echo($car_loop['address']); ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
             <input value="<?php echo($car_loop['brand']); ?>" name ="brand" type="text" placeholder="Car brand">

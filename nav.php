@@ -32,14 +32,15 @@
                         <span><img src="images/user-circle.svg"style="max-width: 30px;"></i></span>
                         <div class="dropdown-content">
                           
-<?php 
+<?php
 if(!isset($_SESSION)){
   session_start();
   $isLogged = true;
+  $userId = $_SESSION['id'];
 }
 if(isset($_SESSION['id'])){
   $isLogged = true;
-
+  $userId = $_SESSION['id'];
 }
 if(!isset($_SESSION['id'])){
   $isLogged = false;
@@ -53,7 +54,12 @@ if(!isset($_SESSION['id'])){
                     <?php } else if(!$isLogged){ ?>
                           <a href="login.php"><p>Login</p></a>
                           <a href="register.php"><p>Sign Up</p></a>
-                    <?php } ?>
+                    <?php } ?> 
+                    <?php if(isset($userId)){ 
+                      if($userId == 0){ ?> 
+                      <a href="edit-users.php"><p>Edit Users</p></a>
+
+                    <?php }} ?>
 
                         </div>
                     </div>
