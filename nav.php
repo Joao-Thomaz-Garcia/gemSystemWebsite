@@ -56,7 +56,7 @@ if(!isset($_SESSION['id'])){
                           <a href="register.php"><p>Sign Up</p></a>
                     <?php } ?> 
                     <?php if(isset($userId)){ 
-                      if($userId == 0){ ?> 
+                      if($userId == 42){ ?> 
                       <a href="edit-users.php"><p>Edit Users</p></a>
 
                     <?php }} ?>

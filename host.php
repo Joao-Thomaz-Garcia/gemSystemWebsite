@@ -115,11 +115,17 @@ if(count($_POST) > 0){
 
     $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
 
+
+    //Coleta só a cidade
+    $exploded = explode(',', $address);
+    $cityaddress = $exploded[0];
+    //
+
     if($deu_certo)
     {
         $owner_id = $_SESSION['id'];
 
-        $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$address', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
+        $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$cityaddress', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
         
         
         $enviar_bd = $mysqli->query($sql_code) or die($mysqli->error);
@@ -221,7 +227,9 @@ function initMap() {
         <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
             <h2 style="text-align: center;">BECOME A GEM HOST</h2>
 
-            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
+            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="carAddress" id="autocomplete" type="text" placeholder="Car address">
+            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up city">
+
             <input value="<?php if(isset($_POST['brand'])) echo $_POST['brand']; ?>" name ="brand" type="text" placeholder="Car brand">
             <input value="<?php if(isset($_POST['model'])) echo $_POST['model']; ?>" name ="model" type="text" placeholder="Car model">
             <input value="<?php if(isset($_POST['year'])) echo $_POST['year']; ?>" name ="year" type="text" placeholder="Car year">

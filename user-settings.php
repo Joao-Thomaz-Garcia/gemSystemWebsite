@@ -177,9 +177,16 @@ if(count($_POST) > 0){
             //die("Tipo de arquivo não aceito + $extensao");
         }
 
+
+
+        //Coleta só a cidade
+        $exploded = explode(',', $address);
+        $cityaddress = $exploded[0];
+          
+
         if($error_file){
             $sql_carcode = "UPDATE cars 
-            SET address = '$address',
+            SET address = '$cityaddress',
             brand = '$brand',
             model = '$model',
             year = '$year',
@@ -196,7 +203,7 @@ if(count($_POST) > 0){
             $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
 
             $sql_carcode = "UPDATE cars 
-            SET address = '$address',
+            SET address = '$exploded',
             brand = '$brand',
             model = '$model',
             year = '$year',
@@ -352,8 +359,6 @@ function initMap() {
     
             <input type="hidden" name="carid" value="<?php echo $car_loop['id']; ?>">
             
-            <input type="email" readonly name="" value="<?php echo('aaa@bb.com'); ?>">
-
             <input value="<?php echo($car_loop['address']); ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
             <input value="<?php echo($car_loop['brand']); ?>" name ="brand" type="text" placeholder="Car brand">
             <input value="<?php echo($car_loop['model']); ?>" name ="model" type="text" placeholder="Car model">

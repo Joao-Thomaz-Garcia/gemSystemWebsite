@@ -71,6 +71,7 @@ if(isset($product)){
 
                 <p>Renter email: </p> $email <br>
                 <p>Owner email: </p> $owneremail <br>
+                
                 ");
 
 }

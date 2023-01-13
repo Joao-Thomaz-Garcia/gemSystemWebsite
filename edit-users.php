@@ -11,7 +11,7 @@ if(!isset($_SESSION)){
   }
 
   
-  if($_SESSION['id'] != 0){
+  if($_SESSION['id'] != 42){
     header("Location: user-settings.php");
   }
 
@@ -74,9 +74,15 @@ if(count($_POST) > 0){
             //die("Tipo de arquivo não aceito + $extensao");
         }
 
+
+        //Coleta só a cidade
+        $exploded = explode(',', $address);
+        $cityaddress = $exploded[0];
+        //
+
         if($error_file){
             $sql_carcode = "UPDATE cars 
-            SET address = '$address',
+            SET address = '$cityaddress',
             brand = '$brand',
             model = '$model',
             year = '$year',
@@ -93,7 +99,7 @@ if(count($_POST) > 0){
             $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
 
             $sql_carcode = "UPDATE cars 
-            SET address = '$address',
+            SET address = '$cityaddress',
             brand = '$brand',
             model = '$model',
             year = '$year',
@@ -209,7 +215,7 @@ function initMap() {
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXw2c6-8CqOr5IWg9Lx-oxv7NRB8KoXhM&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd7CXePhjNu76LACTt5Jufoh5X5tCbuTg&libraries=places&callback=initMap" async defer></script>
 
 
 <?php while($car_loop = $sql_car_query->fetch_assoc()){

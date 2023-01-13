@@ -1,5 +1,13 @@
 <?php 
 
+//
+//SETAR ARQUIVOS DE PDF PARA O REGISTER DA CARTEIRA DE MOTORISTA
+//ENVIAR ESSES ARQUIVOS POR E-MAIL
+//
+
+if(!isset($_SESSION)){
+    session_start();
+}
 if(isset($_SESSION['id'])){
     header("Location: index.php");
   }
