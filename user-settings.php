@@ -5,9 +5,11 @@
 //Verifica a session, se não estiver logado, redireciona para o login.
 if(!isset($_SESSION)){
     session_start();
+    header("Location: login.php");
   }
   if(!isset($_SESSION['id'])){
     header("Location: login.php");
+    die();
   }
 
   include('connection.php');

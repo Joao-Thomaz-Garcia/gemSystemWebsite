@@ -36,7 +36,13 @@
 if(!isset($_SESSION)){
   session_start();
   $isLogged = true;
-  $userId = $_SESSION['id'];
+
+  if(!isset($_SESSION['id'])){
+    $userId = null;
+  }
+  else{
+    $userId = $_SESSION['id'];
+  }
 }
 if(isset($_SESSION['id'])){
   $isLogged = true;

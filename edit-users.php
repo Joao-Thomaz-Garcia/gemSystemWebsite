@@ -5,16 +5,16 @@
 //Verifica a session, se não estiver logado, redireciona para o login.
 if(!isset($_SESSION)){
     session_start();
+    header("Location: login.php");
   }
   if(!isset($_SESSION['id'])){
     header("Location: login.php");
+    die();
   }
-
   
-  if($_SESSION['id'] != 42){
+  if(isset($_SESSION['id']) && $_SESSION['id'] != 42){
     header("Location: user-settings.php");
   }
-
 
   include('connection.php');
 
@@ -119,7 +119,7 @@ if(count($_POST) > 0){
 
         $user_carupdate = $mysqli->query($sql_carcode) or die($mysqli->error);
         if($user_carupdate){
-            header("Location: edit-users");
+            //header("Location: edit-users");
         }
 
     }
