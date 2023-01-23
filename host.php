@@ -14,6 +14,8 @@ $erro = false;
 if(count($_POST) > 0){
     
     include('connection.php');
+    
+    //Lida com o registro
     if(isset($_POST['address'])){
         $address = $_POST['address'];
         //LEMBRAR DE COLOCAR O SISTEMA DO GOOGLE PARA REGISTRAR O ENDEREÇO
@@ -30,7 +32,6 @@ if(count($_POST) > 0){
     
     }
 
-
     $error_address;
     $error_brand;
     $error_model;
@@ -39,7 +40,7 @@ if(count($_POST) > 0){
     $error_seats;
     $error_fuel;
     $error_file;
-    //error_price;
+    $error_price;
 
     //TRATAR DOS ERROS DE ALGUMA FORMA
     if(empty($address)){
@@ -81,64 +82,73 @@ if(count($_POST) > 0){
     //ERRO
 
     //ARQUIVOS
-    if(isset($_FILES['arquivo']))
+    if(isset($_FILES['arquivo'])){
         $arquivo = $_FILES['arquivo'];
 
-    if(empty($arquivo))
+    }
+
+    if(empty($arquivo)){
         $error_file = "Insert a .jpg .jpeg or .png file of your car!";
+
+    }
     else
     {
-        if($arquivo['size'] > 2099900 )
-            $error_file = "The file is too large!";
-        else{
-            $error_file = null;
-        }
+    if($arquivo['size'] > 2099900 )
+        $error_file = "The file is too large!";
+    else{
+        $error_file = null;
+    }
 
-        $pasta = "files/";
-        $nomeDoArquivo = $arquivo['name'];
-        $novoNomeDoArquivo = uniqid();
-        $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+    $pasta = "files/";
+    $nomeDoArquivo = $arquivo['name'];
+    $novoNomeDoArquivo = uniqid();
+    $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
+
+    if($extensao != "jpg" && $extensao != 'png' && $extensao != 'jpeg'){
+        header("index");
+        //die("Tipo de arquivo não aceito + $extensao");
+    }
+
+    $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
+
+    //Lembrar de cortar a imagem depois
+
+    $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
+
+
+    //Coleta só a cidade
+    $exploded = explode(',', $address);
+    $cityaddress = $exploded[0];
+    //
+
+    if($deu_certo)
+    {
+        $owner_id = $_SESSION['id'];
+
+        $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$cityaddress', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
         
-        if($extensao != "jpg" && $extensao != 'png' && $extensao != 'jpeg'){
-
-            die("Tipo de arquivo não aceito + $extensao");
-        }
         
-        $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
-
-        //Lembrar de cortar a imagem depois
-
-        $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
-
-        if($deu_certo)
-        {
-            $owner_id = $_SESSION['id'];
-
-            $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$address', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
-            
-            
-            $enviar_bd = $mysqli->query($sql_code) or die($mysqli->error);
-            if($enviar_bd){
-                //echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
-                UNSET($_POST);
-                header("Location: index.php");
-            }
-            //echo "<p>Arquivo enviado com sucesso!";
+        $enviar_bd = $mysqli->query($sql_code) or die($mysqli->error);
+        if($enviar_bd){
+            //echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
+            UNSET($_POST);
+            header("Location: index.php");
         }
-        /*else
-            echo "<p>Falha ao enviar o arquivo.</p>";*/
+        //echo "<p>Arquivo enviado com sucesso!";
+    }
+    /*else
+        echo "<p>Falha ao enviar o arquivo.</p>";*/
     }
 
 
 
+
+
 }
-
-
-    //Colocar as mensagens e disparos de erro antes de enviar para o banco de dados.
-
 ?>
 
-<?php include("nav.html")?>
+<?php include("nav.php")?>
+
 
 <script>
         //Inicia o mapa e o sistema de autocomplete.
@@ -151,7 +161,8 @@ function initMap() {
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm-1kjUs_NKnKccu2orORsvRaOMFp5Sn4&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXw2c6-8CqOr5IWg9Lx-oxv7NRB8KoXhM&libraries=places&callback=initMap" async defer></script>
+
 
 
 <link rel="stylesheet" href="./css/host.css">
@@ -184,8 +195,21 @@ function initMap() {
     <!-- HEADER - LOGIN -->
 <header style="background-color: rgba(239,238,241,255);">
 
-    <div class="middle">
-        <div style="
+    <div class="middle" style="display:grid;
+            grid-template-columns: 1fr 1fr;">
+            <div class="left" style="display:grid;
+        align-content: center;
+        align-items: stretch;
+        justify-content: center;
+        background-color: white;">
+                <h1 style="text-align: center">BECOME A GEM HOST</h1>       
+                <h2 style="text-align: center;
+                font-size: 1.5rem">LET US HELP YOU HAVE AN EXTRA INCOME BY RENTING YOUR CAR.</h2>
+                    <p style="text-align: center">
+                    With GEM, you will have the freedom to make your car (or cars) available, giving you the freedom to pause or start earning extra cash.</p>
+                    <p class="text2" style="text-align: center"> Fill out the form on the side to get started.</p>
+            </div>
+        <div class="right" style="
         display:grid;
         flex-direction: column;
         flex-wrap: nowrap;
@@ -198,24 +222,18 @@ function initMap() {
         padding: 60px;
         @media only screen and (max-width:1360px){
         height:100%!important}">
-
-    <!--
-        <div style="float: left;">
-            <input type="text" placeholder="First Name"> 
-            <input type="text" placeholder="Last Name">
-    -->
         
-
         <form method="POST" enctype="multipart/form-data" action="">
         <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
             <h2 style="text-align: center;">BECOME A GEM HOST</h2>
 
-            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
+            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="carAddress" id="autocomplete" type="text" placeholder="Car address">
+            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up city">
+
             <input value="<?php if(isset($_POST['brand'])) echo $_POST['brand']; ?>" name ="brand" type="text" placeholder="Car brand">
             <input value="<?php if(isset($_POST['model'])) echo $_POST['model']; ?>" name ="model" type="text" placeholder="Car model">
             <input value="<?php if(isset($_POST['year'])) echo $_POST['year']; ?>" name ="year" type="text" placeholder="Car year">
-            <input value="<?php if(isset($_POST['color'])) echo $_POST['color']; ?>" name ="color" type="text" placeholder="Car color">
-            
+            <input value="<?php if(isset($_POST['color'])) echo $_POST['color']; ?>" name ="color" type="text" placeholder="Car color">            
 
             <div style="float: left;">
             <select value="<?php if(isset($_POST['seats'])) echo $_POST['seats']; ?>" name="seats" id="seat-select">
@@ -227,10 +245,10 @@ function initMap() {
                 <option value="6">6 or more</option> </select>
                 <select name="fuel" id="fuel-select">
                     <option value selected="selected">Type of fuel?</option>
-                    <option value="one">Regular</option>
-                    <option value="two">Premium</option> 
-                    <option value="three">Electricity</option>
-                    <option value="four">Hybrid</option> </select> </div>
+                    <option value="regular">Regular</option>
+                    <option value="premium">Premium</option> 
+                    <option value="electricity">Electricity</option>
+                    <option value="hybrid">Hybrid</option> </select> </div>
                 <input name="priceperday" type="number" min="1" step="any" placeholder="Price per day">
 
             <!--BOTÃO DE ENVIO -->
@@ -249,34 +267,6 @@ function initMap() {
             ">Send data</button>
 
         </form>
-<!--
-
-            <div style="float: left;">
-            <select name="seats" id="seat-select">
-                <option value selected="selected">How Many Seats?</option>
-                <option value="two">2</option>
-                <option value="tree">3</option>
-                <option value="four">4</option>
-                <option value="five">5</option>
-                <option value="six more">6 or more</option> </select>
-                <select name="fuel" id="fuel-select">
-                    <option value selected="selected">Type of Fuel?</option>
-                    <option value="two">Regular</option>
-                    <option value="tree">Premium</option> </select> </div>
-            <label for="image">Photos of your car:</label>
-            <input type="file"
-       id="car-images" name="car-img"
-       accept="image/png, image/jpeg">
-            <label>Max. file size: 40 MB.
-                <p></p>Please enter as many detailed images as possible.</p>
-            
-            <button style="background-color:rgb(0, 149,246,0.3);
-            text-align: center;
-            color: white;
-            margin-top: 10px;
-            border-radius: 5px;
-            padding: 10px;
-            ">Send Your Data</button></label> -->
         </div>
     </div>
 </header>

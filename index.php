@@ -1,3 +1,9 @@
+<?php 
+if(!isset($_SESSION)){
+    session_start();
+}
+?>
+
 <?php
 $pickupDate = date('Y-m-d');
 $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
@@ -22,29 +28,10 @@ $returnDate = date('Y-m-d',  strtotime($pickupDate) + strtotime('5 day', 0));
     <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
-    <nav> <!-- NAV -->
-        <div class="container nav_container">
-            <a href="index.php"> <h3>GEM</h3> </a>
-            <ul class="nav__menu">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About us</a></li>
-                <li><a href="vehicles.php">Vehicles</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a style="border: 1px solid ;
-                    padding: 1rem 1rem;"href="host.php">Become a Host</a></li>
-                <a href="login.php"> <h4>Login</h4></a>
-            </ul>
-            <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
-            <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
-        </div>
-    </nav>
-    <!-- END OF NAV -->
-
+<?php include('nav.php')?>
     <!-- HEADER -->
     <header>
-
-    <script>
+<script>
         //Inicia o mapa e o sistema de autocomplete.
 function initMap() {
   var input = document.getElementById('autocomplete');
@@ -55,11 +42,12 @@ function initMap() {
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm-1kjUs_NKnKccu2orORsvRaOMFp5Sn4&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd7CXePhjNu76LACTt5Jufoh5X5tCbuTg&libraries=places&callback=initMap" async defer></script>
+
 
     
     <div class="form-container">
-    <form action="vehicles.php" method="GET">
+    <form action="vehicles" method="GET">
         <div class="input-box">
             <span>Location</span>
             <input style="width: 365px; type="search" name="cityaddress" id="autocomplete" placeholder="Insert a City">
@@ -79,12 +67,12 @@ function initMap() {
         <div class="container header__container">
             <div class="header__left">
                 <h1>BETTER THAN JUST A RENTAL CAR</h1>
-                    <p>
+                    <p class="text">
 "I was impressed by how easy it was to get the I needed in no time. GEM system is very intuitive and responsive. When I brought it back, I was greeted with a big smile by the host, and the touchless return was a stress-free experience. I'll be back for sure!"</p>
             </div>
             <div class="header__right">
                 <div class="header__right-image">
-                    <img class="image1"src="./images/bmw.png">
+                    <img class="image1"src="./images/bmw2.png">
                     <img class="image2"src="./images/gradientt.png" alt="">
                 </div>
             </div>

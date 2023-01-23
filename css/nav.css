@@ -153,3 +153,78 @@ nav button {
     padding: 10px;
     font-size: 21px;
 }
+.logo {
+    max-width: 150px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    left: -40px;
+    z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-phone {
+    display: none;
+  }
+ .dropdown-phone2 {
+    display: none;
+  }
+
+  @media only screen and (max-width: 1024px){
+    .nav__menu{
+       display: none!important;
+    }
+    .dropdown-phone {
+       position: relative;
+       display: inline-block;
+     }
+     
+     .dropdown-content-phone {
+       display: none;
+       position: absolute;
+       background-color: black;
+       min-width: 160px;
+       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+       padding: 12px 16px;
+       left: -40px;
+       z-index: 1;
+     }
+     
+     .dropdown-phone:hover .dropdown-content-phone {
+       display: block;
+     }
+     .dropdown-phone2 {
+       position: relative;
+       display: inline-block;
+     }
+     
+     .dropdown-content-phone2 {
+       display: none;
+       position: absolute;
+       background-color: black;
+       min-width: 160px;
+       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+       padding: 12px 16px;
+       left: -40px;
+       z-index: 1;
+     }
+     
+     .dropdown-phone2:hover .dropdown-content-phone2 {
+       display: block;
+     }
+   }
+   

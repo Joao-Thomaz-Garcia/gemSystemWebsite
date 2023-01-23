@@ -1,171 +1,243 @@
-<?php include("nav.html")?>
-
+<?php include("nav.php")?>
 <link rel="stylesheet" href="css/usersettings.css">
 <?php
-    include('connection.php');
 
 //Verifica a session, se não estiver logado, redireciona para o login.
 if(!isset($_SESSION)){
     session_start();
-  }
-if(!isset($_SESSION['id'])){
     header("Location: login.php");
   }
-  
-
-
-$id = $_SESSION['id'];
-$sql_cliente = "SELECT * FROM users WHERE id = '$id'";
-$query_cliente = $mysqli->query($sql_cliente) or die($mysqli->error);
-$cliente = $query_cliente->fetch_assoc();
-
-if(isset($_POST['name'])){
+  if(!isset($_SESSION['id'])){
+    header("Location: login.php");
     die();
-    //Verificar as duas senhas e as outras formas de erro, se tudo der certo, enviar e-mail
-        $fullName = $_POST['name'];
-        $email = strtolower($_POST['email']);
-        $password = $_POST['password'];
-        $confirmPassword = $_POST['newpassword'];
+  }
 
-//Verifica a senha no banco de dados.
-        if(password_verify($password, $cliente['password'])){
-
-            if($confirmPassword != null){
-                $password = $confirmPassword;
-                $cryptoPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            }
-
-            $cryptoPassword = password_hash($password, PASSWORD_DEFAULT);
+  include('connection.php');
 
 
-            $sql_code_users = "UPDATE users
-            SET fullname='$fullName',
-            email='$email',
-            password='$cryptoPassword'
-            WHERE id = '$id'";
-
-        }
-}    
+  $owner_id = $_SESSION['id'];
 
 
+  $sql_car_query = $mysqli->query("SELECT * FROM cars WHERE owner_id = '$owner_id'") or die("Error + $mysqli->error");
 
+
+  $user_query = $mysqli->query("SELECT * FROM users WHERE id = '$owner_id'") or die("Error + $mysqli->error");
+
+  while($user_loop = $user_query->fetch_assoc()){
+    $user_mail = $user_loop['email'];
+    $user_name = $user_loop['fullname'];
+  }
 
 $erro = false;
 if(count($_POST) > 0){
+
+    if(isset($_POST['senha'])){
+        $password = $_POST['senha'];
+
+        //Query para verificar se a senha existe, ai começar a fazer alterações
+
+
+
+        $sql_code = "SELECT * FROM users WHERE id = '$owner_id' LIMIT 1";
+        $sql_exec = $mysqli->query($sql_code) or die($mysqli->error);
+
+        $login = $sql_exec->fetch_assoc();
+        if($login != NULL){
+            if(password_verify($password, $login['password']))
+            {
+                //Verifica a sessão novamente, e cria uma se for preciso.
+                if(!isset($_SESSION)){
+                    session_start();
+                }
+                $_SESSION['id'] = $login['id'];
     
-    include('connection.php');
+                //Alteração dos dados cadastrados.
+                $new_password = $_POST['nova_senha'];
+
+                $name = $_POST['nome'];
+                $email = strtolower($_POST['email_usuario']);
+        
+                //Verificar e criar uma query especializada na mudança de dados
+                //Cada caso deve ter um $sql_code baseado na requisição.
+
+
+                //If new password != null && != ''; -> change password
+                if(strlen($new_password) < 6 || strlen($new_password) > 16){
+                    $erro = true;
+                }
+                else{
+                    $erro = false;
+                }            
+
+
+                //Verifica o nome, se for nulo ou vazio, mantem o anterior.
+                if($name == '' && $name == null){
+                    $name = $user_name;
+                }
+
+                //Verifica o e-mail do usuario, se for nulo, invalido ou vazio, mantém o anterior.
+                if($email == null){
+
+                    $mail_error = true;
+                }
+                else if($email != null && !filter_var($email, FILTER_VALIDATE_EMAIL)){
+
+                    $mail_error = true;
+                }
+
+                if($mail_error)
+                {
+                    $email = $user_mail;
+                }
+
+                
+                if($erro){
+                    $sql_code = "UPDATE users 
+                    SET fullname = '$name',
+                    email = '$email'
+                    WHERE id = '$owner_id'";
+                }
+                else if(!$erro){
+                    $cryptoPassword = password_hash($new_password, PASSWORD_DEFAULT);
+
+                    $sql_code = "UPDATE users 
+                    SET fullname = '$name',
+                    email = '$email',
+                    password = '$cryptoPassword'
+                    WHERE id = '$owner_id'";
+                }
+
+
+        
+                $user_update = $mysqli->query($sql_code) or die($mysqli->error);
+                if($user_update){
+                    header("Location: user-settings");
+                }
+
+
+
+
+            }
+            else
+            {
+                //AJUSTAR OS ERROS DOS DIE();
+                //$login_error = "Failed to confirm your password, please try again.";
+            }
+        }
+        else
+        {
+            //$login_error = "Failed to confirm your password, please try again.";
+        }
+    
+    }
+
     if(isset($_POST['address'])){
+
         $address = $_POST['address'];
-        //LEMBRAR DE COLOCAR O SISTEMA DO GOOGLE PARA REGISTRAR O ENDEREÇO
         $brand = $_POST['brand'];
         $model = $_POST['model'];
         $year = $_POST['year'];
         $color = $_POST['color'];
         $seats = $_POST['seats'];
-        //Filtrar tipos de combustivel e quantos assentos para não entrar coisas que não devem.
         $seats = $_POST['seats'];
         $fuel = $_POST['fuel'];
-        //Filtrar tipos de combustivel e quantos assentos para não entrar coisas que não devem.
         $daily_values = $_POST['priceperday'];
     
-    }
+        $available = $_POST['available'];
 
 
-    $error_address;
-    $error_brand;
-    $error_model;
-    $error_year;
-    $error_color;
-    $error_seats;
-    $error_fuel;
-    $error_file;
-    //error_price;
+        $carid = $_POST['carid'];
 
-    //TRATAR DOS ERROS DE ALGUMA FORMA
-    if(empty($address)){
-        $error_address = "Insert your address.";
-    }
-    else{
-        $error_address = null;
-    }
-    if(empty($brand)){
-        $error_brand = "Insert the car brand.";
-    }
-    else{
-        $error_brand = null;
-    }
-    if(empty($model)){
-        $error_model = "Insert the car model.";
-    }
-    else{
-        $error_model = null;
-    }
-    if(empty($year)){
-        $error_year = "Insert the car year.";
-    }
-    else{
-        $error_year = null;
-    }
-    if(empty($color)){
-        $error_color = "Insert the car color.";
-    }
-    else{
-        $error_color = null;
-    }
-    if(empty($seats)){
-        $error_seats = "Insert the car seats.";
-    }
-    else{
-        $error_seats = null;
-    }
-    //ERRO
+        //
 
-    //ARQUIVOS
-    if(isset($_FILES['arquivo']))
-        $arquivo = $_FILES['arquivo'];
+        //ARQUIVOS
+        if(isset($_FILES['arquivo'])){
+            $arquivo = $_FILES['arquivo'];
 
-    if(empty($arquivo))
-        $error_file = "Insert a .jpg .jpeg or .png file of your car!";
-    else
-    {
+        }
+
+        $error_file = false;
+        if(empty($arquivo)){
+            $error_file = true;
+
+        }
+        else
+        {
         if($arquivo['size'] > 2099900 )
-            $error_file = "The file is too large!";
+            $error_file = true;
         else{
-            $error_file = null;
+            $error_file = false;
         }
 
         $pasta = "files/";
         $nomeDoArquivo = $arquivo['name'];
         $novoNomeDoArquivo = uniqid();
         $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-        
+
         if($extensao != "jpg" && $extensao != 'png' && $extensao != 'jpeg'){
-
-            die("Tipo de arquivo não aceito + $extensao");
+            $error_file = true;
+            //die("Tipo de arquivo não aceito + $extensao");
         }
-        
-        $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
-        $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
-        if($deu_certo)
-        {
-            $owner_id = $_SESSION['id'];
 
-            $sql_code = "INSERT INTO cars (owner_id, address, brand, model, year, color, fuel, seats, daily_value, filepath, register_time) VALUES ('$owner_id' , '$address', '$brand', '$model' , '$year', '$color', '$fuel' ,'$seats', '$daily_values' ,'$path' , NOW())";
-            $enviar_bd = $mysqli->query($sql_code) or die($mysqli->error);
-            if($enviar_bd){
-                //echo "<p><b>CLIENTE CADASTRADO!!</b></p>";
-                UNSET($_POST);
-            }
-            //echo "<p>Arquivo enviado com sucesso!";
+
+
+        //Coleta só a cidade
+        $exploded = explode(',', $address);
+        $cityaddress = $exploded[0];
+          
+
+        if($error_file){
+            $sql_carcode = "UPDATE cars 
+            SET address = '$cityaddress',
+            brand = '$brand',
+            model = '$model',
+            year = '$year',
+            color = '$color',
+            fuel = '$fuel',
+            seats = '$seats',
+            daily_value = '$daily_values',
+            available = '$available'
+            WHERE id = '$carid'";
+
         }
-        //else
-            //echo "<p>Falha ao enviar o arquivo.</p>";
+        else if(!$error_file){
+            $path = $pasta . $novoNomeDoArquivo . "." . $extensao;
+            $deu_certo = move_uploaded_file($arquivo["tmp_name"], $path);
+
+            $sql_carcode = "UPDATE cars 
+            SET address = '$exploded',
+            brand = '$brand',
+            model = '$model',
+            year = '$year',
+            color = '$color',
+            fuel = '$fuel',
+            seats = '$seats',
+            daily_value = '$daily_values',
+            available = '$available',
+            filepath = '$path'
+            WHERE id = '$carid'";
+
+        }
+
+        //Update no banco de dados.
+
+        $user_carupdate = $mysqli->query($sql_carcode) or die($mysqli->error);
+        if($user_carupdate){
+            header("Location: index");
+        }
+
     }
 
 
 
+
+    }
+
 }
+
+
+
+
 
 
     //Colocar as mensagens e disparos de erro antes de enviar para o banco de dados.
@@ -201,15 +273,25 @@ if(count($_POST) > 0){
 
 </style>
 <header>
-<form class="macaco">
+<form style="border: 0px solid" action="" method="POST">
+    <div style="display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem">
 <div style="display: grid;
 align-items: center;
 justify-content: center;">
-    Name: <br></break><input style="width: 400px;" value="<?php echo $cliente['fullname'] ?>" type="text" name="name" />
-    <Br>E-mail:<br><input value="<?php echo $cliente['email'] ?>" type="email" name="email" />
+    Name: <br></break><input style="width: 400px;" type="text" value="<?php 
+    if(isset($user_name)){
+        echo($user_name); 
+    }  ?>" name="nome" />
+
+    <Br>E-mail:<br><input type="email" value="<?php 
+    if(isset($user_mail)){
+        echo($user_mail); 
+    }  ?>" name="email_usuario" />
     
-    <br>Your password: <br><input type="password" name="password" />
-    <Br>Insert the new password: <br><input type="password" name="newpassword" />
+    <br>Password: <br><input type="password" name="senha" />
+    <Br>New Password: <br><input type="password" name="nova_senha" />
     
     <br>
     <button type="submit" style="
@@ -219,7 +301,13 @@ justify-content: center;">
     border-radius: 5px;
     padding: 10px 77px;
     cursor: pointer;
-"><i class="uil uil-save"></i>Save</button>
+"><i class="uil uil-save"></i>Save</button> </form>
+    </div>
+    <div style="display: grid;
+    align-items center;
+    justify-content: center;
+    border: 1px solid rgb(219, 219, 219);">
+    </div>
     </div>
 <link rel="stylesheet" href="./css/host.css">
     <style>
@@ -241,50 +329,64 @@ justify-content: center;">
             }
         
     </style>
-
-    <!-- HEADER - LOGIN -->
-<header>
-<div class="section group">
     <div class="middle">
         <div style="display:grid;
-        flex-direction: column;
-        flex-wrap: nowrap;
         align-content: center;
-        align-items: stretch;
         justify-content: center;
         background-color: white;
-        border: 1px solid rgb(219, 219, 219);
-        padding: 30px;" class="col span_1_of_2">
+        padding: 20px;">
+
+
+<script>
+        //Inicia o mapa e o sistema de autocomplete.
+function initMap() {
+  var input = document.getElementById('autocomplete');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    document.getElementById("address").value = JSON.stringify(place.address_components);
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXw2c6-8CqOr5IWg9Lx-oxv7NRB8KoXhM&libraries=places&callback=initMap" async defer></script>
+
+
+<?php while($car_loop = $sql_car_query->fetch_assoc()){
+  ?>
+
 
         <form method="POST" enctype="multipart/form-data" action="">
             <h2 style="text-align: center;">EDIT CAR INFO</h2>
             
-            <input value="<?php if(isset($_POST['address'])) echo $_POST['address']; ?>" name ="address" type="text" placeholder="Pick up address">
-            <input value="<?php if(isset($_POST['brand'])) echo $_POST['brand']; ?>" name ="brand" type="text" placeholder="Car brand">
-            <input value="<?php if(isset($_POST['model'])) echo $_POST['model']; ?>" name ="model" type="text" placeholder="Car model">
-            <input value="<?php if(isset($_POST['year'])) echo $_POST['year']; ?>" name ="year" type="text" placeholder="Car year">
-            <input value="<?php if(isset($_POST['color'])) echo $_POST['color']; ?>" name ="color" type="text" placeholder="Car color">
+    
+            <input type="hidden" name="carid" value="<?php echo $car_loop['id']; ?>">
+            
+            <input value="<?php echo($car_loop['address']); ?>" name ="address" id="autocomplete" type="text" placeholder="Pick up address">
+            <input value="<?php echo($car_loop['brand']); ?>" name ="brand" type="text" placeholder="Car brand">
+            <input value="<?php echo($car_loop['model']); ?>" name ="model" type="text" placeholder="Car model">
+            <input value="<?php echo($car_loop['year']); ?>" name ="year" type="text" placeholder="Car year">
+            <input value="<?php echo($car_loop['color']); ?>" name ="color" type="text" placeholder="Car color">
             
 
-            <div style="float: left;">
-            <select value="<?php if(isset($_POST['seats'])) echo $_POST['seats']; ?>" name="seats" id="seat-select">
-                <option value selected="selected">How many seats?</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6 or more</option> </select>
+            <div style="">
+            <select name="seats" id="seat-select">
+                <option value disabled>How many seats?</option>
+                <option <?php if($car_loop['seats'] == 2) echo 'selected'; ?> value="2">2</option>
+                <option <?php if($car_loop['seats'] == 3) echo 'selected'; ?> value="3">3</option>
+                <option <?php if($car_loop['seats'] == 4) echo 'selected'; ?> value="4">4</option>
+                <option <?php if($car_loop['seats'] == 5) echo 'selected'; ?> value="5">5</option>
+                <option <?php if($car_loop['seats'] == 6) echo 'selected'; ?> value="6">6 or more</option> </select>
                 <select name="fuel" id="fuel-select">
-                    <option value selected="selected">Type of fuel?</option>
-                    <option value="regular">Regular</option>
-                    <option value="premium">Premium</option> 
-                    <option value="electricity">Electricity</option>
-                    <option value="hybrid">Hybrid</option> </select> </div>
+                    <option value disabled>Type of fuel?</option>
+                    <option <?php if($car_loop['fuel'] == 'regular') echo 'selected';?> value="regular">Regular</option>
+                    <option <?php if($car_loop['fuel'] == 'premium') echo 'selected';?> value="premium">Premium</option> 
+                    <option <?php if($car_loop['fuel'] == 'electricity') echo 'selected';?> value="electricity">Electricity</option>
+                    <option <?php if($car_loop['fuel'] == 'hybrid') echo 'selected';?> value="hybrid">Hybrid</option> </select> </div>
             <select name="available" id="">
-                <option value selected="selected">Available</option>
-                <option value="0">Not available</option>
+                <option <?php if($car_loop['available'] >= 1) echo 'selected'; ?> value="1">Available</option>
+                <option <?php if($car_loop['available'] <= 0) echo 'selected'; ?> value="0">Not available</option>
             </select>
-                <input name="priceperday" type="number" min="1" step="any" placeholder="Price per day">
+                <input value="<?php echo($car_loop['daily_value']); ?>" name="priceperday" type="number" min="1" step="any" placeholder="Price per day">
 
             <!--BOTÃO DE ENVIO -->
             <label for="">Best photo of your car:</label>
@@ -302,19 +404,9 @@ justify-content: center;">
             ">Send data</button>
 
         </form>
-        </div>
-        <div class="col span_1_of_2">
-        <div id="app" class="container">
-     <div class="grid">
-        <form>
+<?php }?>
 
-          <button name="test" value="0" type="submit"><img src="images/bmw.png" alt="carro1"></button>
-          <input type="hidden" name="id" value="">
-          <div class="title">
-            <h3>Exemplo</h3>
-          </div>
-          <div class="description">
-          </form>
+
     </div>
     <style>
 </header>

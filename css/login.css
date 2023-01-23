@@ -146,12 +146,9 @@ nav button {
 header {
     position: relative;
     top: 5rem;
-    overflow: hidden;
-    height: 100%;
-    margin-bottom: 0rem;
-    height: 100%;
+    overflow: hidden!important;
+    height: 95vh;
 }
-
 .header__contrainer {
     display: grid;
     grid-template-columns: 1fr 1fr;

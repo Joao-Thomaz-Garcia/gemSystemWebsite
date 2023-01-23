@@ -1,14 +1,23 @@
-<?php include("nav.html")?>
+<?php 
+if(!isset($_SESSION)){
+    session_start();
+}
+?>
+
+<?php include("nav.php")?>
 <?php
 include("connection.php");
 
 //Verifica a session, se não estiver logado, redireciona para o login.
+//RETIRAR A NECESSIDADE DE LOGIN PARA ENTRAR NA PÁGINA DOS VEICULOS
 if(!isset($_SESSION)){
   session_start();
 }
 if(!isset($_SESSION['id'])){
-  header("Location: login.php");
+  //header("Location: login");
 }
+//
+
 
 //Faz a filtragem para o envio de dados.
 if(isset($_GET['cityaddress'])){
@@ -24,13 +33,13 @@ if(isset($_GET['pickupdate'])){
   $pickupdate = $_GET['pickupdate'];
 }
 else{
-  $pickupdate = '';
+  $pickupdate = date('Y-m-d');
 }
 if(isset($_GET['returndate'])){
   $returndate = $_GET['returndate'];
 }
 else{
-  $returndate = '';
+  $returndate = date('Y-m-d',  strtotime($pickupdate) + strtotime('5 day', 0));
 }
 
 
@@ -45,7 +54,7 @@ else if($cityaddress != '')
 }
 else{
   //CASO ALGO ERRADO ACONTEÇA ENVIA PARA A PÁGINA INICIAL
-  die(header("Location: index.php"));
+  die(header("Location: index"));
 }
 
 ?>
@@ -55,10 +64,10 @@ else{
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 340px));
+    grid-template-columns: repeat(3, minmax(200px, 540px));
     grid-gap: 20px;
     align-items: stretch;
-    
+    overflow: hidden;
   }
 
   .grid>form {
@@ -69,8 +78,8 @@ else{
   
   .grid>form img {
     cursor: pointer;
-    max-width: 440px;
-    max-height: 300px;
+    max-width: 100%;
+    max-height: 210px;
     transition-duration: 0.5s;
     border-radius: 4px;
   }
@@ -128,26 +137,82 @@ else{
     font-weight: 500;
     cursor: pointer;
 }
+@media only screen and (max-width:1440px){
+  .form-container form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: 1rem;
+    left: 269px;
+    background: rgb(0, 0, 0);
+    color: white;
+    padding: 21px;
+    border-radius: 0.5rem;
+}
+}
 @media only screen and (max-width:1360px){
 
-.form-container form{
-left: 120px;
+  .form-container form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  top: 1rem;
+  left: 232px;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 21px;
+  border-radius: 0.5rem;
 }
 .grid>form img {
     cursor: pointer;
-    max-width: 240px;
-    max-height: 200px;
+    max-width: 440px;
+    max-height: 250px;
     transition-duration: 0.5s;
     border-radius: 4px;
   }
-}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 240px));
+    grid-template-columns: repeat(3, minmax(100px, 440px));
     grid-gap: 20px;
     align-items: stretch;
     
   }
+}
+@media only screen and (max-width:600px){
+  header {
+    position: relative;
+    top: 5rem!important;
+    height: 95vh;
+}
+  .form-container form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  top: -1rem;
+  left: 0px;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 7px;
+  border-radius: 0rem;
+}
+.grid {
+  display: grid;
+    grid-template-columns: repeat(1, minmax(100px, 440px));
+    grid-gap: 20px;
+    position: absolute;
+    top: 12rem;
+    align-items: stretch;
+    left: 0px;
+    
+  }
+}
   </style>
 <header>
 
@@ -162,12 +227,13 @@ function initMap() {
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm-1kjUs_NKnKccu2orORsvRaOMFp5Sn4&libraries=places&callback=initMap" async defer></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd7CXePhjNu76LACTt5Jufoh5X5tCbuTg&libraries=places&callback=initMap" async defer></script>
 
 
 
     <div class="form-container">
-    <form action="vehicles.php" method="GET">
+    <form action="vehicles" method="GET">
         <div class="input-box">
             <span>Location</span>
             <input style="width: 365px; type="search" name="cityaddress" id="autocomplete" value="<?php echo $cityaddress ?>" placeholder="City or address">
@@ -191,17 +257,33 @@ function initMap() {
   <?php
     while($arquivo = $sql_query->fetch_assoc())
     {
+      if($arquivo['available'] != 0){
         ?>
-          <form>
-          <button name="test" value="0" type="submit"><img src="<?php echo $arquivo['filepath'];  ?>" alt="carro1"></button>
+
+
+          <form action="<?php 
+  if(!isset($_SESSION['id']))
+{
+  echo('login');
+}
+  else{
+  echo('confirmCar');
+} ?>" 
+method="GET">
+          <button name="" value="" type="submit"><img src="<?php echo $arquivo['filepath'];  ?>" alt="carro1"></button>
           <input type="hidden" name="id" value="<?php echo $arquivo['id']; ?>">
+
+          <input type="hidden" name="pickupdate" value="<?php echo($pickupdate); ?>">
+          <input type="hidden" name="returndate" value="<?php echo($returndate); ?>">
+
           <div class="title">
             <h3><?php echo $arquivo['model']; ?></h3>
           </div>
           <div class="description">
-            R$<?php echo $arquivo['id']; //SUBSTITUIR O BANCO DE DADOS O QUANTO ANTES!!?>
+            R$<?php echo $arquivo['daily_value']; //SUBSTITUIR O BANCO DE DADOS O QUANTO ANTES!!?> Per Day
           </div>
       </form>
+<?php } else{}?>
 
   <?php
     }

@@ -145,47 +145,8 @@ nav button {
 /* =========== HEADER ================ */
 header {
     position: relative;
-    top: 6rem;
-    overflow: hidden;
-    height: 80vh;
-    margin-bottom: 5rem;
+    top: 5rem;
+    overflow: auto;
 }
 
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 240px));
-    grid-gap: 20px;
-    align-items: stretch;
-  }
-
-  .grid>article {
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
-  }
-  
-  .grid>article img {
-    cursor: pointer;
-    max-width: 300px;
-    max-height: 200px;
-    transition-duration: 0.5s;
-  }
-  .grid>article img:hover {
-    opacity: 0.5;
-  }
-  .grid h3 {
-    padding: 5px 0px 0px 5px;
-    text-align: center;
-  }
-
-.description {
-    float: right;
-    padding-right: 5px;
-    font-size: 18px;
-}
-
-.grid>article button{
-    width: 238px;
-    height: 100px;
-}
 

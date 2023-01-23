@@ -5,7 +5,7 @@ if(!isset($_SESSION)){
   }
   //Se a sessão já existir, e o usuario estiver logado, redireciona ele para a página index.php
   if(isset($_SESSION['id'])){
-    header("Location: index.php");
+    header("Location: user-settings");
   }
 
 if(isset($_POST['email'])){
@@ -29,7 +29,7 @@ if(isset($_POST['email'])){
             }
             $_SESSION['id'] = $login['id'];
 
-            header("Location: index.php");
+            header("Location: index");
             //echo "Logado!";
         }
         else
@@ -55,7 +55,7 @@ function loginError()
 
 ?>
 
-<?php include("nav.html");?>
+<?php include("nav.php");?>
 <link rel="stylesheet" href="./css/login.css">
     <style>
         input {
@@ -73,11 +73,17 @@ function loginError()
             button:hover {
             background-color: rgb(30, 195, 241);
         }
+        @media only screen and (max-width:600px){
+         
+         div .left{
+          display: none;
+      }
+  }
     </style>
 
     <!-- HEADER - LOGIN -->
 <header style="background-color: rgba(239,238,241,255);">
-    <div style="
+    <div class="all" style="
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -104,7 +110,7 @@ function loginError()
         border: 1px solid rgb(219, 219, 219);
         padding: 40px;" action="" method="POST">
                     <img src="images/logoGEM.png" style="padding: 0px 70px 30px 70px" alt="">
-                <input type="text" name="email" placeholder="Email">
+                <input type="email" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">
                 <button type="submit" style="
             text-align: center;
@@ -114,10 +120,11 @@ function loginError()
             ">Login</button>
 
             
+          <!--  
             <a style="color: rgb(0, 149, 246, 1);
             text-align: center;
             padding-top: 20px;
-            font-weight: 600;" href="recoverPassword.php">Forgot password?</a>
+            font-weight: 600;" href="recoverPassword.php">Forgot password?</a> -->
             </form>
 
             <div style="background-color: white;
@@ -134,7 +141,6 @@ function loginError()
     
     </div>
 </header>
-<?php include("copyright.html")?>
 
     
     
