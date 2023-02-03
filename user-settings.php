@@ -244,34 +244,6 @@ if(count($_POST) > 0){
 
 ?>
 
-<style>
-            input {
-            all: unset;
-            padding: 5px;
-            border: 1px solid rgb(219, 219, 219);
-            margin-bottom: 10px!important;
-            border-radius: 5px;         
-            width: 100%;  
-        }
-
-        button{
-            background-color:rgb(0, 149,246,0.3);
-            cursor: pointer;
-            transition-duration: 0.4s;
-            color: white;
-            }
-            button:hover {
-            background-color:rgb(0, 149,246,20.3);
-            color: black;
-            }
-            select {
-            
-            padding: 5px;
-            border: 1px solid rgb(219, 219, 219);
-            margin-bottom: 10px!important;
-        }
-
-</style>
 <header>
 <form style="border: 0px solid" action="" method="POST">
     <div style="display: grid;
@@ -294,14 +266,7 @@ justify-content: center;">
     <Br>New Password: <br><input type="password" name="nova_senha" />
     
     <br>
-    <button type="submit" style="
-    text-align: center;
-    align-items: center;
-    margin-top: 5px;
-    border-radius: 5px;
-    padding: 10px 77px;
-    cursor: pointer;
-"><i class="uil uil-save"></i>Save</button> </form>
+    <button class="buttonsubmit "type="submit"><i class="uil uil-save"></i>Save</button> </form>
     </div>
     <div style="display: grid;
     align-items center;
@@ -310,32 +275,12 @@ justify-content: center;">
     </div>
     </div>
 <link rel="stylesheet" href="./css/host.css">
-    <style>
-        input {
-            all: unset;
-            padding: 5px;
-            border: 1px solid rgb(219, 219, 219);
-            margin-bottom: 10px!important;
-
-        }
-        button{
-            cursor: pointer;
-            transition-duration: 0.4s;
-            color: black;
-            }
-            button:hover {
-            background-color:rgb(30, 195, 241);
-            color: black;
-            }
-        
-    </style>
     <div class="middle">
         <div style="display:grid;
         align-content: center;
         justify-content: center;
         background-color: white;
         padding: 20px;">
-
 
 <script>
         //Inicia o mapa e o sistema de autocomplete.
@@ -404,6 +349,7 @@ function initMap() {
             ">Send data</button>
 
         </form>
+        <br>
 <?php }?>
 
 

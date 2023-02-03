@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
     die();
   }
   
-  if(isset($_SESSION['id']) && $_SESSION['id'] != 42){
+  if(isset($_SESSION['id']) && $_SESSION['id'] != 20){
     header("Location: user-settings.php");
   }
 
@@ -140,34 +140,6 @@ if(count($_POST) > 0){
 
 ?>
 
-<style>
-            input {
-            all: unset;
-            padding: 5px;
-            border: 1px solid rgb(219, 219, 219);
-            margin-bottom: 10px!important;
-            border-radius: 5px;         
-            width: 100%;  
-        }
-
-        button{
-            background-color:rgb(0, 149,246,0.3);
-            cursor: pointer;
-            transition-duration: 0.4s;
-            color: white;
-            }
-            button:hover {
-            background-color:rgb(0, 149,246,20.3);
-            color: black;
-            }
-            select {
-            
-            padding: 5px;
-            border: 1px solid rgb(219, 219, 219);
-            margin-bottom: 10px!important;
-        }
-
-</style>
 <header>
     </div>
     <div style="display: grid;
@@ -176,34 +148,12 @@ if(count($_POST) > 0){
     border: 1px solid rgb(219, 219, 219);">
     </div>
     </div>
-<link rel="stylesheet" href="./css/host.css">
-    <style>
-        input {
-            all: unset;
-            padding: 5px;
-            border: 1px solid rgb(219, 219, 219);
-            margin-bottom: 10px!important;
 
-        }
-        button{
-            cursor: pointer;
-            transition-duration: 0.4s;
-            color: black;
-            }
-            button:hover {
-            background-color:rgb(30, 195, 241);
-            color: black;
-            }
-        
-    </style>
     <div class="middle">
-        <div style="display:grid;
-        align-content: center;
-        justify-content: center;
-        background-color: white;
-        padding: 20px;">
-
-
+        <div class="middlediv">
+<form>
+    <input type="name" class="searchid" placeholder="Search ID Here">
+        </form>
 <script>
         //Inicia o mapa e o sistema de autocomplete.
 function initMap() {
@@ -232,7 +182,7 @@ while($user_loop = $user_query->fetch_assoc()){
   ?>
 
 
-        <form method="POST" enctype="multipart/form-data" action="">
+        <form method="POST" enctype="multipart/form-data" action="" class="form">
             <h2 style="text-align: center;">EDIT CAR INFO</h2>
             
             
@@ -283,6 +233,7 @@ while($user_loop = $user_query->fetch_assoc()){
             ">Send data</button>
 
         </form>
+        <br>
 <?php }?>
 
 
