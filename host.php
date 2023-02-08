@@ -208,6 +208,7 @@ function initMap() {
                     <p style="text-align: center">
                     With GEM, you will have the freedom to make your car (or cars) available, giving you the freedom to pause or start earning extra cash.</p>
                     <p class="text2" style="text-align: center"> Fill out the form on the side to get started.</p>
+                    <p class="text2" style="text-align: center;color:red">25% commission rate</p>  
             </div>
         <div class="right" style="
         display:grid;

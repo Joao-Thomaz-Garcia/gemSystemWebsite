@@ -151,8 +151,9 @@ if(count($_POST) > 0){
 
     <div class="middle">
         <div class="middlediv">
-<form>
+<form class="formid">
     <input type="name" class="searchid" placeholder="Search ID Here">
+    <button class="buttonid">Search</button>
         </form>
 <script>
         //Inicia o mapa e o sistema de autocomplete.

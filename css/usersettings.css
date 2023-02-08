@@ -40,10 +40,10 @@ button{
 }
 .middlediv{
 	display:grid;
-        align-content: center;
-        justify-content: center;
-        background-color: white;
-        padding: 20px;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
 }
 .form {
     display:grid;
@@ -58,12 +58,29 @@ button{
     padding: 60px;
 	color: black;
 }
+.formid
+{
+	display: grid;
+	flex-direction: column;
+}
 .searchid{
 	width: 50ch;
 	color:black;
 	text-align: center;
 	border-radius: 20px;
 	cursor: text;
+}
+.buttonid{
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+    align-items: center;
+    margin-top: 5px;
+	margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px 50px;
+    cursor: pointer;
 }
 /*  SECTIONS  */
 .section {
