@@ -7,8 +7,80 @@ header {
     
 }
 
-input [id="ugabunga"]{
-width: 50px;
+input {
+	all: unset;
+	padding: 5px;
+	border: 1px solid rgb(219, 219, 219);
+	margin-bottom: 10px!important;
+
+}
+button{
+	background-color:rgb(0, 149,246,0.3);
+	cursor: pointer;
+	transition-duration: 0.4s;
+	color: black;
+	}
+	button:hover {
+	background-color:rgb(30, 195, 241);
+	color: black;
+	}
+	select {
+	
+	padding: 5px;
+	border: 1px solid rgb(219, 219, 219);
+	margin-bottom: 10px!important;
+}	
+.buttonsubmit{
+	text-align: center;
+    align-items: center;
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 10px 77px;
+    cursor: pointer;
+}
+.middlediv{
+	display:grid;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+}
+.form {
+    display:grid;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    border: 1px solid rgb(219, 219, 219);
+    padding: 60px;
+	color: black;
+}
+.formid
+{
+	display: grid;
+	flex-direction: column;
+}
+.searchid{
+	width: 50ch;
+	color:black;
+	text-align: center;
+	border-radius: 20px;
+	cursor: text;
+}
+.buttonid{
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+    align-items: center;
+    margin-top: 5px;
+	margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px 50px;
+    cursor: pointer;
 }
 /*  SECTIONS  */
 .section {

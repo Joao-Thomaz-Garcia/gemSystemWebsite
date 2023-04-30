@@ -4,7 +4,10 @@ if(!isset($_SESSION)){
 }
 ?>
 
-<?php include("nav.php")?>
+<?php 
+include("nav.php");
+include('lib/mail.php');
+?>
 
 <link rel="stylesheet" href="contact.css">
 <<script src="https://kit.fontawesome.com/6e94d2c5d0.js" crossorigin="anonymous"></script>  
